@@ -106,7 +106,8 @@ namespace JsonApiDotNetCore.Serialization
             var resourceProperties = resource.GetType().GetProperties();
             foreach (var attr in relationshipAttributes)
             {
-                if (!relationshipValues.TryGetValue(attr.PublicName, out RelationshipEntry relationshipData) || !relationshipData.IsPopulated)
+                var relationshipIsProvided = relationshipValues.TryGetValue(attr.PublicName, out RelationshipEntry relationshipData);
+                if (!relationshipIsProvided || !relationshipData.IsPopulated)
                     continue;
 
                 if (attr is HasOneAttribute hasOneAttribute)
@@ -168,15 +169,19 @@ namespace JsonApiDotNetCore.Serialization
             var rio = (ResourceIdentifierObject)relationshipData.Data;
             var relatedId = rio?.Id;
 
+            var relationshipType = relationshipData.SingleData == null
+                ? attr.RightType
+                : ResourceContextProvider.GetResourceContext(relationshipData.SingleData.Type).ResourceType;
+
             // this does not make sense in the following case: if we're setting the dependent of a one-to-one relationship, IdentifiablePropertyName should be null.
             var foreignKeyProperty = resourceProperties.FirstOrDefault(p => p.Name == attr.IdentifiablePropertyName);
 
             if (foreignKeyProperty != null)
                 // there is a FK from the current resource pointing to the related object,
                 // i.e. we're populating the relationship from the dependent side.
-                SetForeignKey(resource, foreignKeyProperty, attr, relatedId);
+                SetForeignKey(resource, foreignKeyProperty, attr, relatedId, relationshipType);
 
-            SetNavigation(resource, attr, relatedId);
+            SetNavigation(resource, attr, relatedId, relationshipType);
 
             // depending on if this base parser is used client-side or server-side,
             // different additional processing per field needs to be executed.
@@ -185,9 +190,10 @@ namespace JsonApiDotNetCore.Serialization
 
         /// <summary>
         /// Sets the dependent side of a HasOne relationship, which means that a
-        /// foreign key also will to be populated.
+        /// foreign key also will be populated.
         /// </summary>
-        private void SetForeignKey(IIdentifiable resource, PropertyInfo foreignKey, HasOneAttribute attr, string id)
+        private void SetForeignKey(IIdentifiable resource, PropertyInfo foreignKey, HasOneAttribute attr, string id,
+            Type relationshipType)
         {
             bool foreignKeyPropertyIsNullableType = Nullable.GetUnderlyingType(foreignKey.PropertyType) != null
                 || foreignKey.PropertyType == typeof(string);
@@ -198,7 +204,7 @@ namespace JsonApiDotNetCore.Serialization
                 throw new FormatException($"Cannot set required relationship identifier '{attr.IdentifiablePropertyName}' to null because it is a non-nullable type.");
             }
 
-            var typedId = TypeHelper.ConvertStringIdToTypedId(attr.Property.PropertyType, id, ResourceFactory);
+            var typedId = TypeHelper.ConvertStringIdToTypedId(relationshipType, id, ResourceFactory);
             foreignKey.SetValue(resource, typedId);
         }
 
@@ -206,7 +212,8 @@ namespace JsonApiDotNetCore.Serialization
         /// Sets the principal side of a HasOne relationship, which means no
         /// foreign key is involved.
         /// </summary>
-        private void SetNavigation(IIdentifiable resource, HasOneAttribute attr, string relatedId)
+        private void SetNavigation(IIdentifiable resource, HasOneAttribute attr, string relatedId,
+            Type relationshipType)
         {
             if (relatedId == null)
             {
@@ -214,7 +221,7 @@ namespace JsonApiDotNetCore.Serialization
             }
             else
             {
-                var relatedInstance = (IIdentifiable)ResourceFactory.CreateInstance(attr.RightType);
+                var relatedInstance = (IIdentifiable)ResourceFactory.CreateInstance(relationshipType);
                 relatedInstance.StringId = relatedId;
                 attr.SetValue(resource, relatedInstance, ResourceFactory);
             }
@@ -232,8 +239,10 @@ namespace JsonApiDotNetCore.Serialization
             {   // if the relationship is set to null, no need to set the navigation property to null: this is the default value.
                 var relatedResources = relationshipData.ManyData.Select(rio =>
                 {
-                    var relatedInstance = (IIdentifiable)ResourceFactory.CreateInstance(attr.RightType);
+                    var relationshipType = ResourceContextProvider.GetResourceContext(rio.Type).ResourceType;
+                    var relatedInstance = (IIdentifiable)ResourceFactory.CreateInstance(relationshipType);
                     relatedInstance.StringId = rio.Id;
+                    
                     return relatedInstance;
                 });
 

@@ -119,5 +119,4 @@ namespace UnitTests.TestModels
     {
         [Attr] public string Title { get; set; }
     }
-
 }

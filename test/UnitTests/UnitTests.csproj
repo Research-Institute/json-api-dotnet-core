@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Examples\JsonApiDotNetCoreExample\JsonApiDotNetCoreExample.csproj" />
+    <ProjectReference Include="..\JsonApiDotNetCoreExampleTests\JsonApiDotNetCoreExampleTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

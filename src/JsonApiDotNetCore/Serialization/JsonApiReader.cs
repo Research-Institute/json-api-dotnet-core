@@ -89,7 +89,7 @@ namespace JsonApiDotNetCore.Serialization
                 var bodyResourceTypes = GetBodyResourceTypes(model);
                 foreach (var bodyResourceType in bodyResourceTypes)
                 {
-                    if (bodyResourceType != endpointResourceType)
+                    if (!endpointResourceType.IsAssignableFrom(bodyResourceType))
                     {
                         var resourceFromEndpoint = _resourceContextProvider.GetResourceContext(endpointResourceType);
                         var resourceFromBody = _resourceContextProvider.GetResourceContext(bodyResourceType);

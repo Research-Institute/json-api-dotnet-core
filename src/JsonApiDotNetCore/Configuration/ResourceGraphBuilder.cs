@@ -187,7 +187,7 @@ namespace JsonApiDotNetCore.Configuration
                     var throughProperties = throughType.GetProperties();
 
                     // ArticleTag.Article
-                    hasManyThroughAttribute.LeftProperty = throughProperties.SingleOrDefault(x => x.PropertyType == resourceType)
+                    hasManyThroughAttribute.LeftProperty = throughProperties.SingleOrDefault(x => x.PropertyType.IsAssignableFrom(resourceType))
                         ?? throw new InvalidConfigurationException($"{throughType} does not contain a navigation property to type {resourceType}");
 
                     // ArticleTag.ArticleId

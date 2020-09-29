@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Bogus;
 using FluentAssertions;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Controllers;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Serialization.Client.Internal;
 using JsonApiDotNetCore.Serialization.Objects;
+using JsonApiDotNetCore.Services;
 using JsonApiDotNetCoreExample;
 using JsonApiDotNetCoreExample.Data;
 using JsonApiDotNetCoreExample.Models;
@@ -15,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Xunit;
@@ -32,12 +35,6 @@ namespace JsonApiDotNetCoreExampleTests.Acceptance
 
             _faker = new Faker<KebabCasedModel>()
                 .RuleFor(m => m.CompoundAttr, f => f.Lorem.Sentence());
-
-            testContext.ConfigureServicesAfterStartup(services =>
-            {
-                var part = new AssemblyPart(typeof(EmptyStartup).Assembly);
-                services.AddMvcCore().ConfigureApplicationPartManager(apm => apm.ApplicationParts.Add(part));
-            });
         }
 
         [Fact]
@@ -191,5 +188,15 @@ namespace JsonApiDotNetCoreExampleTests.Acceptance
 
             ((DefaultContractResolver)options.SerializerSettings.ContractResolver).NamingStrategy = new KebabCaseNamingStrategy();
         }
+    }
+    
+    public sealed class KebabCasedModelsController : JsonApiController<KebabCasedModel>
+    {
+        public KebabCasedModelsController(
+            IJsonApiOptions options,
+            ILoggerFactory loggerFactory,
+            IResourceService<KebabCasedModel> resourceService)
+            : base(options, loggerFactory, resourceService)
+        { }
     }
 }

@@ -1,7 +1,9 @@
 using Bogus;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceInheritance;
 using Microsoft.Extensions.Logging.Abstractions;
 using UnitTests.TestModels;
+using InheritancePerson = JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceInheritance.Person;
 using Person = UnitTests.TestModels.Person;
 
 namespace UnitTests.Serialization
@@ -57,6 +59,14 @@ namespace UnitTests.Serialization
             resourceGraphBuilder.Add<Blog>();
             resourceGraphBuilder.Add<Food>();
             resourceGraphBuilder.Add<Song>();
+            
+            resourceGraphBuilder.Add<Animal>();
+            resourceGraphBuilder.Add<Cat>();
+            resourceGraphBuilder.Add<Dog>();
+            
+            resourceGraphBuilder.Add<InheritancePerson>();
+            resourceGraphBuilder.Add<Male>();
+            resourceGraphBuilder.Add<Female>();
 
             return resourceGraphBuilder.Build();
         }

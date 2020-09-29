@@ -4,6 +4,7 @@ using System.Linq;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Serialization.Client.Internal;
 using JsonApiDotNetCore.Serialization.Objects;
+using JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceInheritance;
 using Newtonsoft.Json;
 using UnitTests.TestModels;
 using Xunit;
@@ -231,8 +232,7 @@ namespace UnitTests.Serialization.Client
             var nestedIncludedResource = includedResource.Principal;
             Assert.Equal(nestedIncludeAttributeValue, nestedIncludedResource.AttributeMember);
         }
-
-
+        
         [Fact]
         public void DeserializeSingle_DeeplyNestedIncluded_CanDeserialize()
         {
@@ -284,7 +284,6 @@ namespace UnitTests.Serialization.Client
             Assert.Equal(deeplyNestedIncludedAttributeValue, deeplyNestedIncluded.AttributeMember);
         }
 
-
         [Fact]
         public void DeserializeList_DeeplyNestedIncluded_CanDeserialize()
         {
@@ -334,6 +333,60 @@ namespace UnitTests.Serialization.Client
             var deeplyNestedIncluded = nestedIncluded.Principal;
             Assert.Equal(10, deeplyNestedIncluded.Id);
             Assert.Equal(deeplyNestedIncludedAttributeValue, deeplyNestedIncluded.AttributeMember);
+        }
+        
+        [Fact]
+        public void DeserializeSingle_ResourceWithInheritanceAndInclusions_CanDeserialize()
+        {
+            // Arrange
+            var content = CreateDocumentWithRelationships("males");
+            content.SingleData.Relationships.Add("parents", CreateRelationshipData("males", isToManyData:true, id: "10"));
+            content.SingleData.Relationships["parents"].ManyData.Add(CreateRelationshipData("females", id: "10").SingleData);
+            content.SingleData.Relationships.Add("pet", CreateRelationshipData("cats", id: "20"));
+            content.Included = new List<ResourceObject>
+            {
+                new ResourceObject
+                {
+                    Type = "males",
+                    Id = "10",
+                    Attributes = new Dictionary<string, object> { { "hasBeard", "false" }, { "retired", "true" } }
+                },
+                new ResourceObject
+                {
+                    Type = "females",
+                    Id = "11",
+                    Attributes = new Dictionary<string, object> { { "isPregnant", "false" }, { "retired", "false" } }
+                },
+                new ResourceObject
+                {
+                    Type = "cats",
+                    Id = "20",
+                    Attributes = new Dictionary<string, object> { {"feline", "true" }, { "scaredOfDogs", "true" } }
+                },
+            };
+            var body = JsonConvert.SerializeObject(content);
+
+            // Act
+            var result = _deserializer.DeserializeSingle<Male>(body);
+            var resource = result.Data;
+
+            // Assert
+            Assert.Equal(1, resource.Id);
+            Assert.NotNull(resource.Pet);
+            Assert.True(resource.Pet.Feline);
+            Assert.True(resource.Pet is Cat);
+            Assert.True(((Cat)resource.Pet).ScaredOfDogs);
+            
+            Assert.NotEmpty(resource.Parents);
+            var father = resource.Parents[0];
+            Assert.True(father is Male);
+            Assert.True(father.Retired);
+            Assert.False(((Male)father).HasBeard);
+            
+            var mother = resource.Parents[1];
+            Assert.True(mother is Female);
+            Assert.False(mother.Retired);
+            Assert.False(((Female)mother).IsPregnant);
         }
     }
 }
