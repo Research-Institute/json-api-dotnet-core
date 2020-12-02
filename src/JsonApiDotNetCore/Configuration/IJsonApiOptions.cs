@@ -187,6 +187,12 @@ namespace JsonApiDotNetCore.Configuration
         /// </summary>
         JsonSerializerSettings SerializerSettings { get; }
 
+        /// <summary>
+        /// Determines whether JsonApiDotNetCore will dynamically register controllers for every registered resource
+        /// in the resource graph. Defaults to true.
+        /// </summary>
+        bool AutoGenerateControllers { get;  }
+
         internal DefaultContractResolver SerializerContractResolver => (DefaultContractResolver) SerializerSettings.ContractResolver;
     }
 }

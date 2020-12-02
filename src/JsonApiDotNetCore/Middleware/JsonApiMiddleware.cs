@@ -12,6 +12,7 @@ using JsonApiDotNetCore.Serialization;
 using JsonApiDotNetCore.Serialization.Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -44,32 +45,37 @@ namespace JsonApiDotNetCore.Middleware
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (resourceContextProvider == null) throw new ArgumentNullException(nameof(resourceContextProvider));
 
-            var routeValues = httpContext.GetRouteData().Values;
-
-            var primaryResourceContext = CreatePrimaryResourceContext(routeValues, controllerResourceMapping, resourceContextProvider);
-            if (primaryResourceContext != null)
+            // TODO: endpoint is null when route is not found. Instead of doing half work here, we should consider just throwing a 404 here already.
+            var endpoint = httpContext.GetEndpoint();
+            if (endpoint != null)
             {
-                if (!await ValidateContentTypeHeaderAsync(httpContext, options.SerializerSettings) || 
-                    !await ValidateAcceptHeaderAsync(httpContext, options.SerializerSettings))
+                var primaryResourceContext = GetPrimaryResourceContext(endpoint, controllerResourceMapping, resourceContextProvider);
+                if (primaryResourceContext != null)
                 {
-                    return;
+                    if (!await ValidateContentTypeHeaderAsync(httpContext, options.SerializerSettings) || 
+                        !await ValidateAcceptHeaderAsync(httpContext, options.SerializerSettings))
+                    {
+                        return;
+                    }
+    
+                    var routeValues = httpContext.GetRouteData().Values;
+                    SetupRequest((JsonApiRequest)request, primaryResourceContext, routeValues, options, resourceContextProvider, httpContext.Request);
+    
+                    httpContext.RegisterJsonApiRequest();
                 }
-
-                SetupRequest((JsonApiRequest)request, primaryResourceContext, routeValues, options, resourceContextProvider, httpContext.Request);
-
-                httpContext.RegisterJsonApiRequest();
             }
 
             await _next(httpContext);
         }
 
-        private static ResourceContext CreatePrimaryResourceContext(RouteValueDictionary routeValues,
-            IControllerResourceMapping controllerResourceMapping, IResourceContextProvider resourceContextProvider)
+        private static ResourceContext GetPrimaryResourceContext(Endpoint endpoint, IControllerResourceMapping controllerResourceMapping, IResourceContextProvider resourceContextProvider)
         {
-            var controllerName = (string) routeValues["controller"];
+            var controllerDescriptor = (ControllerActionDescriptor)endpoint.Metadata.Single(meta => meta is ControllerActionDescriptor);
+            var controllerName = controllerDescriptor.ControllerTypeInfo.FullName;
+
             if (controllerName != null)
             {
-                var resourceType = controllerResourceMapping.GetAssociatedResource(controllerName);
+                var resourceType = controllerResourceMapping.GetResourceForEndpoint(controllerName);
                 if (resourceType != null)
                 {
                     return resourceContextProvider.GetResourceContext(resourceType);

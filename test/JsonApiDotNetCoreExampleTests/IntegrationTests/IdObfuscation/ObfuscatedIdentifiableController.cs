@@ -10,10 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
 {
-    public abstract class ObfuscatedIdentifiableController<TResource> : BaseJsonApiController<TResource>
+    public sealed class ObfuscatedIdentifiableController<TResource> : BaseJsonApiController<TResource>
         where TResource : class, IIdentifiable<int>
     {
-        protected ObfuscatedIdentifiableController(IJsonApiOptions options, ILoggerFactory loggerFactory,
+        public ObfuscatedIdentifiableController(IJsonApiOptions options, ILoggerFactory loggerFactory,
             IResourceService<TResource> resourceService)
             : base(options, loggerFactory, resourceService)
         {

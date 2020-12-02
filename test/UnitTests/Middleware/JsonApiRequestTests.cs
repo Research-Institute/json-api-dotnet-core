@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JsonApiDotNetCore.Configuration;
@@ -7,6 +8,7 @@ using JsonApiDotNetCore.Middleware;
 using JsonApiDotNetCoreExample.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
@@ -47,7 +49,7 @@ namespace UnitTests.Middleware
             var controllerResourceMappingMock = new Mock<IControllerResourceMapping>();
 
             controllerResourceMappingMock
-                .Setup(x => x.GetAssociatedResource(It.IsAny<string>()))
+                .Setup(x => x.GetResourceForEndpoint(It.IsAny<string>()))
                 .Returns(typeof(Article));
 
             var httpContext = new DefaultHttpContext();
@@ -98,8 +100,10 @@ namespace UnitTests.Middleware
                 feature.RouteValues["action"] = "Relationship";
             }
 
+
+            var endpointMetadata = new EndpointMetadataCollection(new ControllerActionDescriptor {ControllerTypeInfo = typeof(object).GetTypeInfo()});
             httpContext.Features.Set<IRouteValuesFeature>(feature);
-            httpContext.SetEndpoint(new Endpoint(null, new EndpointMetadataCollection(), null));
+            httpContext.SetEndpoint(new Endpoint(null, endpointMetadata, null));
         }
     }
 }

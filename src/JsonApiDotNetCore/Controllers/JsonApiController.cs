@@ -27,24 +27,6 @@ namespace JsonApiDotNetCore.Controllers
         { }
 
         /// <inheritdoc />
-        public JsonApiController(
-            IJsonApiOptions options,
-            ILoggerFactory loggerFactory,
-            IGetAllService<TResource, TId> getAll = null,
-            IGetByIdService<TResource, TId> getById = null,
-            IGetSecondaryService<TResource, TId> getSecondary = null,
-            IGetRelationshipService<TResource, TId> getRelationship = null,
-            ICreateService<TResource, TId> create = null,
-            IAddToRelationshipService<TResource, TId> addToRelationship = null,
-            IUpdateService<TResource, TId> update = null,
-            ISetRelationshipService<TResource, TId> setRelationship = null,
-            IDeleteService<TResource, TId> delete = null,
-            IRemoveFromRelationshipService<TResource, TId> removeFromRelationship = null)
-            : base(options, loggerFactory,getAll, getById, getSecondary, getRelationship, create, addToRelationship, update,
-                setRelationship, delete, removeFromRelationship)
-        { }
-
-        /// <inheritdoc />
         [HttpGet]
         public override async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
@@ -126,24 +108,6 @@ namespace JsonApiDotNetCore.Controllers
             ILoggerFactory loggerFactory,
             IResourceService<TResource, int> resourceService)
             : base(options, loggerFactory, resourceService)
-        { }
-
-        /// <inheritdoc />
-        public JsonApiController(
-            IJsonApiOptions options,
-            ILoggerFactory loggerFactory,
-            IGetAllService<TResource, int> getAll = null,
-            IGetByIdService<TResource, int> getById = null,
-            IGetSecondaryService<TResource, int> getSecondary = null,
-            IGetRelationshipService<TResource, int> getRelationship = null,
-            ICreateService<TResource, int> create = null,
-            IAddToRelationshipService<TResource, int> addToRelationship = null,
-            IUpdateService<TResource, int> update = null,
-            ISetRelationshipService<TResource, int> setRelationship = null,
-            IDeleteService<TResource, int> delete = null,
-            IRemoveFromRelationshipService<TResource, int> removeFromRelationship = null)
-            : base(options, loggerFactory, getAll, getById, getSecondary, getRelationship, create, addToRelationship, update,
-                setRelationship, delete, removeFromRelationship)
         { }
     }
 }

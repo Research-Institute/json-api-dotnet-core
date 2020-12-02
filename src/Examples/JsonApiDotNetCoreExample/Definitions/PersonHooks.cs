@@ -6,9 +6,9 @@ using JsonApiDotNetCoreExample.Models;
 
 namespace JsonApiDotNetCoreExample.Definitions
 {
-    public class PersonHooksDefinition : LockableHooksDefinition<Person>
+    public class PersonHooks : LockableHooksDefinition<Person>
     {
-        public PersonHooksDefinition(IResourceGraph resourceGraph) : base(resourceGraph) { }
+        public PersonHooks(IResourceGraph resourceGraph) : base(resourceGraph) { }
 
         public override IEnumerable<string> BeforeUpdateRelationship(HashSet<string> ids, IRelationshipsDictionary<Person> resourcesByRelationship, ResourcePipeline pipeline)
         {

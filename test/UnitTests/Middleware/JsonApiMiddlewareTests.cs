@@ -1,12 +1,14 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using JsonApiDotNetCore.Configuration;
 using JsonApiDotNetCore.Middleware;
 using JsonApiDotNetCore.Resources.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Moq;
 using Xunit;
 
@@ -81,6 +83,8 @@ namespace UnitTests.Middleware
         {
             var controllerResourceMapping = holder.ControllerResourceMapping.Object;
             var context = holder.HttpContext;
+            var endpointMetadata = new EndpointMetadataCollection(new ControllerActionDescriptor {ControllerTypeInfo = typeof(object).GetTypeInfo()});
+            context.SetEndpoint(new Endpoint(null, endpointMetadata, null));
             var options = holder.Options.Object;
             var request = holder.Request;
             var resourceGraph = holder.ResourceGraph.Object;
@@ -98,7 +102,7 @@ namespace UnitTests.Middleware
             });
             var forcedNamespace = "api/v1";
             var mockMapping = new Mock<IControllerResourceMapping>();
-            mockMapping.Setup(x => x.GetAssociatedResource(It.IsAny<string>())).Returns(typeof(string));
+            mockMapping.Setup(x => x.GetResourceForEndpoint(It.IsAny<string>())).Returns(typeof(string));
 
             Mock<IJsonApiOptions> mockOptions = CreateMockOptions(forcedNamespace);
             var mockGraph = CreateMockResourceGraph(resourceName, includeRelationship: relType != null);

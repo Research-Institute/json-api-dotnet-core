@@ -10,9 +10,9 @@ using JsonApiDotNetCoreExample.Models;
 
 namespace JsonApiDotNetCoreExample.Definitions
 {
-    public class ArticleHooksDefinition : ResourceHooksDefinition<Article>
+    public class ArticleHooks : ResourceHooksDefinition<Article>
     {
-        public ArticleHooksDefinition(IResourceGraph resourceGraph) : base(resourceGraph) { }
+        public ArticleHooks(IResourceGraph resourceGraph) : base(resourceGraph) { }
 
         public override IEnumerable<Article> OnReturn(HashSet<Article> resources, ResourcePipeline pipeline)
         {

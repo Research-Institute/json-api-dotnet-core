@@ -37,7 +37,8 @@ namespace JsonApiDotNetCore.Configuration
         private readonly ResourceGraphBuilder _resourceGraphBuilder;
         private readonly ServiceDiscoveryFacade _serviceDiscoveryFacade;
         private readonly ServiceProvider _intermediateProvider;
-        
+        private IResourceGraph _resourceGraph;
+
         public Action<MvcOptions> ConfigureMvcOptions { get; set; }
 
         public JsonApiApplicationBuilder(IServiceCollection services, IMvcCoreBuilder mvcBuilder)
@@ -83,8 +84,8 @@ namespace JsonApiDotNetCore.Configuration
 
             configureResourceGraph?.Invoke(_resourceGraphBuilder);
 
-            var resourceGraph = _resourceGraphBuilder.Build();
-            _services.AddSingleton(resourceGraph);
+            _resourceGraph = _resourceGraphBuilder.Build();
+            _services.AddSingleton(_resourceGraph);
         }
 
         /// <summary>
@@ -101,11 +102,34 @@ namespace JsonApiDotNetCore.Configuration
                 ConfigureMvcOptions?.Invoke(options);
             });
 
+            if (_options.AutoGenerateControllers)
+            {
+                RegisterControllerFeatureProvider();
+            }
+
             if (_options.ValidateModelState)
             {
                 _mvcBuilder.AddDataAnnotations();
                 _services.AddSingleton<IModelMetadataProvider, JsonApiModelMetadataProvider>();
             }
+        }
+
+        private void RegisterControllerFeatureProvider()
+        {
+            IJsonApiControllerGenerator controllerFeatureProvider;
+            if (_services.Any(descriptor => descriptor.ServiceType == typeof(IJsonApiControllerGenerator)))
+            {
+                using (var provider = _services.BuildServiceProvider())
+                {
+                    controllerFeatureProvider = provider.GetRequiredService<IJsonApiControllerGenerator>();
+                }
+            }
+            else
+            {
+                controllerFeatureProvider = new JsonApiControllerGenerator(_resourceGraph);
+            }
+
+            _mvcBuilder.ConfigureApplicationPartManager(manager => manager.FeatureProviders.Add(controllerFeatureProvider));
         }
 
         /// <summary>

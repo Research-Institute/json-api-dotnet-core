@@ -76,6 +76,9 @@ namespace JsonApiDotNetCore.Configuration
             }
         };
 
+        /// <inheritdoc />
+        public bool AutoGenerateControllers { get; set; } = true;
+
         // Workaround for https://github.com/dotnet/efcore/issues/21026
         internal bool DisableTopPagination { get; set; }
         internal bool DisableChildrenPagination { get; set; }

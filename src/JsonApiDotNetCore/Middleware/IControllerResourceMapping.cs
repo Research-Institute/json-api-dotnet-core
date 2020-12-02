@@ -10,6 +10,6 @@ namespace JsonApiDotNetCore.Middleware
         /// <summary>
         /// Get the associated resource type for the provided controller name.
         /// </summary>
-        Type GetAssociatedResource(string controllerName);
+        Type GetResourceForEndpoint(string controllerName);
     }
 }
