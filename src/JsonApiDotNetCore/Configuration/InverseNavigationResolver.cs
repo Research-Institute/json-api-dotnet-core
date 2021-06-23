@@ -52,7 +52,7 @@ namespace JsonApiDotNetCore.Configuration
             {
                 if (!(relationship is HasManyThroughAttribute))
                 {
-                    INavigation inverseNavigation = entityType.FindNavigation(relationship.Property.Name)?.FindInverse();
+                    INavigation inverseNavigation = entityType.FindNavigation(relationship.Property.Name)?.Inverse;
                     relationship.InverseNavigationProperty = inverseNavigation?.PropertyInfo;
                 }
             }

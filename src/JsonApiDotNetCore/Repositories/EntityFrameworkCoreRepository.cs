@@ -374,7 +374,7 @@ namespace JsonApiDotNetCore.Repositories
             if (relationship is HasOneAttribute)
             {
                 INavigation navigation = TryGetNavigation(relationship);
-                return navigation?.IsDependentToPrincipal() ?? false;
+                return navigation?.IsOnDependent ?? false;
             }
 
             return false;
