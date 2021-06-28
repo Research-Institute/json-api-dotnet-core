@@ -8,14 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Resources.Annotations;
 using JsonApiDotNetCore.Serialization;
 using JsonApiDotNetCore.Serialization.Objects;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 
@@ -32,57 +35,70 @@ namespace JsonApiDotNetCore.Middleware
 
         private readonly RequestDelegate _next;
 
-        public JsonApiMiddleware(RequestDelegate next)
+        public JsonApiMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor)
         {
             _next = next;
+
+            var session = new AspNetCodeTimerSession(httpContextAccessor);
+            CodeTimingSessionManager.Capture(session);
         }
 
         public async Task InvokeAsync(HttpContext httpContext, IControllerResourceMapping controllerResourceMapping, IJsonApiOptions options,
-            IJsonApiRequest request, IResourceContextProvider resourceContextProvider)
+            IJsonApiRequest request, IResourceContextProvider resourceContextProvider, ILogger<JsonApiMiddleware> logger)
         {
             ArgumentGuard.NotNull(httpContext, nameof(httpContext));
             ArgumentGuard.NotNull(controllerResourceMapping, nameof(controllerResourceMapping));
             ArgumentGuard.NotNull(options, nameof(options));
             ArgumentGuard.NotNull(request, nameof(request));
             ArgumentGuard.NotNull(resourceContextProvider, nameof(resourceContextProvider));
+            ArgumentGuard.NotNull(logger, nameof(logger));
 
-            if (!await ValidateIfMatchHeaderAsync(httpContext, options.SerializerSettings))
+            using (CodeTimingSessionManager.Current.Measure("JSON:API middleware"))
             {
-                return;
-            }
-
-            RouteValueDictionary routeValues = httpContext.GetRouteData().Values;
-            ResourceContext primaryResourceContext = CreatePrimaryResourceContext(httpContext, controllerResourceMapping, resourceContextProvider);
-
-            if (primaryResourceContext != null)
-            {
-                if (!await ValidateContentTypeHeaderAsync(HeaderConstants.MediaType, httpContext, options.SerializerSettings) ||
-                    !await ValidateAcceptHeaderAsync(MediaType, httpContext, options.SerializerSettings))
+                if (!await ValidateIfMatchHeaderAsync(httpContext, options.SerializerSettings))
                 {
                     return;
                 }
 
-                SetupResourceRequest((JsonApiRequest)request, primaryResourceContext, routeValues, options, resourceContextProvider, httpContext.Request);
+                RouteValueDictionary routeValues = httpContext.GetRouteData().Values;
+                ResourceContext primaryResourceContext = CreatePrimaryResourceContext(httpContext, controllerResourceMapping, resourceContextProvider);
 
-                httpContext.RegisterJsonApiRequest();
-            }
-            else if (IsOperationsRequest(routeValues))
-            {
-                if (!await ValidateContentTypeHeaderAsync(HeaderConstants.AtomicOperationsMediaType, httpContext, options.SerializerSettings) ||
-                    !await ValidateAcceptHeaderAsync(AtomicOperationsMediaType, httpContext, options.SerializerSettings))
+                if (primaryResourceContext != null)
                 {
-                    return;
+                    if (!await ValidateContentTypeHeaderAsync(HeaderConstants.MediaType, httpContext, options.SerializerSettings) ||
+                        !await ValidateAcceptHeaderAsync(MediaType, httpContext, options.SerializerSettings))
+                    {
+                        return;
+                    }
+
+                    SetupResourceRequest((JsonApiRequest)request, primaryResourceContext, routeValues, options, resourceContextProvider, httpContext.Request);
+
+                    httpContext.RegisterJsonApiRequest();
+                }
+                else if (IsOperationsRequest(routeValues))
+                {
+                    if (!await ValidateContentTypeHeaderAsync(HeaderConstants.AtomicOperationsMediaType, httpContext, options.SerializerSettings) ||
+                        !await ValidateAcceptHeaderAsync(AtomicOperationsMediaType, httpContext, options.SerializerSettings))
+                    {
+                        return;
+                    }
+
+                    SetupOperationsRequest((JsonApiRequest)request, options, httpContext.Request);
+
+                    httpContext.RegisterJsonApiRequest();
                 }
 
-                SetupOperationsRequest((JsonApiRequest)request, options, httpContext.Request);
+                // Workaround for bug https://github.com/dotnet/aspnetcore/issues/33394
+                httpContext.Features.Set<IQueryFeature>(new FixedQueryFeature(httpContext.Features));
 
-                httpContext.RegisterJsonApiRequest();
+                using (CodeTimingSessionManager.Current.Measure("Other middleware"))
+                {
+                    await _next(httpContext);
+                }
             }
 
-            // Workaround for bug https://github.com/dotnet/aspnetcore/issues/33394
-            httpContext.Features.Set<IQueryFeature>(new FixedQueryFeature(httpContext.Features));
-
-            await _next(httpContext);
+            string result = CodeTimingSessionManager.Current.GetResult();
+            logger.LogWarning($"Measurement results for {httpContext.Request.GetDisplayUrl()}:{Environment.NewLine}{result}");
         }
 
         private async Task<bool> ValidateIfMatchHeaderAsync(HttpContext httpContext, JsonSerializerSettings serializerSettings)

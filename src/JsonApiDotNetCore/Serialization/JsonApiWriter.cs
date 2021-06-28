@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Errors;
 using JsonApiDotNetCore.Middleware;
 using JsonApiDotNetCore.Serialization.Objects;
@@ -47,50 +48,54 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNull(context, nameof(context));
 
-            HttpRequest request = context.HttpContext.Request;
-            HttpResponse response = context.HttpContext.Response;
-
-            await using TextWriter writer = context.WriterFactory(response.Body, Encoding.UTF8);
-            string responseContent;
-
-            try
+            using (CodeTimingSessionManager.Current.Measure("Serialize response body"))
             {
-                responseContent = SerializeResponse(context.Object, (HttpStatusCode)response.StatusCode);
-            }
+                HttpRequest request = context.HttpContext.Request;
+                HttpResponse response = context.HttpContext.Response;
+
+                await using TextWriter writer = context.WriterFactory(response.Body, Encoding.UTF8);
+                string responseContent;
+
+                try
+                {
+                    responseContent = SerializeResponse(context.Object, (HttpStatusCode)response.StatusCode);
+                }
 #pragma warning disable AV1210 // Catch a specific exception instead of Exception, SystemException or ApplicationException
-            catch (Exception exception)
+                catch (Exception exception)
 #pragma warning restore AV1210 // Catch a specific exception instead of Exception, SystemException or ApplicationException
-            {
-                ErrorDocument errorDocument = _exceptionHandler.HandleException(exception);
-                responseContent = _serializer.Serialize(errorDocument);
+                {
+                    ErrorDocument errorDocument = _exceptionHandler.HandleException(exception);
+                    responseContent = _serializer.Serialize(errorDocument);
 
-                response.StatusCode = (int)errorDocument.GetErrorStatusCode();
+                    response.StatusCode = (int)errorDocument.GetErrorStatusCode();
+                }
+
+                bool hasMatchingETag = SetETagResponseHeader(request, response, responseContent);
+
+                if (hasMatchingETag)
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotModified;
+                    responseContent = string.Empty;
+                }
+
+                if (request.Method == HttpMethod.Head.Method)
+                {
+                    responseContent = string.Empty;
+                }
+
+                string url = request.GetEncodedUrl();
+
+                if (!string.IsNullOrEmpty(responseContent))
+                {
+                    response.ContentType = _serializer.ContentType;
+                }
+
+                _traceWriter.LogMessage(() =>
+                    $"Sending {response.StatusCode} response for {request.Method} request at '{url}' with body: <<{responseContent}>>");
+
+                await writer.WriteAsync(responseContent);
+                await writer.FlushAsync();
             }
-
-            bool hasMatchingETag = SetETagResponseHeader(request, response, responseContent);
-
-            if (hasMatchingETag)
-            {
-                response.StatusCode = (int)HttpStatusCode.NotModified;
-                responseContent = string.Empty;
-            }
-
-            if (request.Method == HttpMethod.Head.Method)
-            {
-                responseContent = string.Empty;
-            }
-
-            string url = request.GetEncodedUrl();
-
-            if (!string.IsNullOrEmpty(responseContent))
-            {
-                response.ContentType = _serializer.ContentType;
-            }
-
-            _traceWriter.LogMessage(() => $"Sending {response.StatusCode} response for {request.Method} request at '{url}' with body: <<{responseContent}>>");
-
-            await writer.WriteAsync(responseContent);
-            await writer.FlushAsync();
         }
 
         private string SerializeResponse(object contextObject, HttpStatusCode statusCode)

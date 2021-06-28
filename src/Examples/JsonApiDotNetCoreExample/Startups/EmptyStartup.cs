@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace JsonApiDotNetCoreExample.Startups
 {
@@ -14,7 +15,7 @@ namespace JsonApiDotNetCoreExample.Startups
         {
         }
 
-        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
         }
     }

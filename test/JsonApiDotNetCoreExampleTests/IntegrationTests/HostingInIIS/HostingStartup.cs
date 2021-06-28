@@ -4,6 +4,7 @@ using JsonApiDotNetCoreExampleTests.Startups;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace JsonApiDotNetCoreExampleTests.IntegrationTests.HostingInIIS
 {
@@ -19,11 +20,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.HostingInIIS
             options.IncludeTotalResourceCount = true;
         }
 
-        public override void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+        public override void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
             app.UsePathBase("/iis-application-virtual-directory");
 
-            base.Configure(app, environment);
+            base.Configure(app, environment, loggerFactory);
         }
     }
 }

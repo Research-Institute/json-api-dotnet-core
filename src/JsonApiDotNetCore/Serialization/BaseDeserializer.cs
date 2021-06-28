@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
 using JsonApiDotNetCore.Resources.Internal;
@@ -61,19 +62,28 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNullNorEmpty(body, nameof(body));
 
-            JToken bodyJToken = LoadJToken(body);
-            Document = bodyJToken.ToObject<Document>();
+            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Deserialize"))
+            {
+                JToken bodyJToken = LoadJToken(body);
+                Document = bodyJToken.ToObject<Document>();
+            }
 
             if (Document != null)
             {
                 if (Document.IsManyData)
                 {
-                    return Document.ManyData.Select(ParseResourceObject).ToHashSet(IdentifiableComparer.Instance);
+                    using (CodeTimingSessionManager.Current.Measure("Deserializer.Build (list)"))
+                    {
+                        return Document.ManyData.Select(ParseResourceObject).ToHashSet(IdentifiableComparer.Instance);
+                    }
                 }
 
                 if (Document.SingleData != null)
                 {
-                    return ParseResourceObject(Document.SingleData);
+                    using (CodeTimingSessionManager.Current.Measure("Deserializer.Build (single)"))
+                    {
+                        return ParseResourceObject(Document.SingleData);
+                    }
                 }
             }
 

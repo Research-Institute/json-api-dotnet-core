@@ -9,6 +9,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Moq.Language;
 using Xunit;
@@ -81,7 +82,7 @@ namespace UnitTests.Middleware
             IJsonApiOptions options = holder.Options.Object;
             JsonApiRequest request = holder.Request;
             IResourceGraph resourceGraph = holder.ResourceGraph.Object;
-            return holder.MiddleWare.InvokeAsync(context, controllerResourceMapping, options, request, resourceGraph);
+            return holder.MiddleWare.InvokeAsync(context, controllerResourceMapping, options, request, resourceGraph, NullLogger<JsonApiMiddleware>.Instance);
         }
 
         private InvokeConfiguration GetConfiguration(string path, string resourceName = "users", string action = "", string id = null, Type relType = null)
@@ -94,7 +95,7 @@ namespace UnitTests.Middleware
             var middleware = new JsonApiMiddleware(_ =>
             {
                 return Task.Run(() => Console.WriteLine("finished"));
-            });
+            }, new HttpContextAccessor());
 
             const string forcedNamespace = "api/v1";
             var mockMapping = new Mock<IControllerResourceMapping>();

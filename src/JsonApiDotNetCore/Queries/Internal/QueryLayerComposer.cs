@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Queries.Expressions;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
@@ -82,54 +83,60 @@ namespace JsonApiDotNetCore.Queries.Internal
 
         private QueryLayer ComposeTopLayer(IEnumerable<ExpressionInScope> constraints, ResourceContext resourceContext)
         {
-            // @formatter:wrap_chained_method_calls chop_always
-            // @formatter:keep_existing_linebreaks true
-
-            QueryExpression[] expressionsInTopScope = constraints
-                .Where(constraint => constraint.Scope == null)
-                .Select(constraint => constraint.Expression)
-                .ToArray();
-
-            // @formatter:keep_existing_linebreaks restore
-            // @formatter:wrap_chained_method_calls restore
-
-            PaginationExpression topPagination = GetPagination(expressionsInTopScope, resourceContext);
-
-            if (topPagination != null)
+            using (CodeTimingSessionManager.Current.Measure("Top-level query composition"))
             {
-                _paginationContext.PageSize = topPagination.PageSize;
-                _paginationContext.PageNumber = topPagination.PageNumber;
+                // @formatter:wrap_chained_method_calls chop_always
+                // @formatter:keep_existing_linebreaks true
+
+                QueryExpression[] expressionsInTopScope = constraints
+                    .Where(constraint => constraint.Scope == null)
+                    .Select(constraint => constraint.Expression)
+                    .ToArray();
+
+                // @formatter:keep_existing_linebreaks restore
+                // @formatter:wrap_chained_method_calls restore
+
+                PaginationExpression topPagination = GetPagination(expressionsInTopScope, resourceContext);
+
+                if (topPagination != null)
+                {
+                    _paginationContext.PageSize = topPagination.PageSize;
+                    _paginationContext.PageNumber = topPagination.PageNumber;
+                }
+
+                return new QueryLayer(resourceContext)
+                {
+                    Filter = GetFilter(expressionsInTopScope, resourceContext),
+                    Sort = GetSort(expressionsInTopScope, resourceContext),
+                    Pagination = ((JsonApiOptions)_options).DisableTopPagination ? null : topPagination,
+                    Projection = GetProjectionForSparseAttributeSet(resourceContext)
+                };
             }
-
-            return new QueryLayer(resourceContext)
-            {
-                Filter = GetFilter(expressionsInTopScope, resourceContext),
-                Sort = GetSort(expressionsInTopScope, resourceContext),
-                Pagination = ((JsonApiOptions)_options).DisableTopPagination ? null : topPagination,
-                Projection = GetProjectionForSparseAttributeSet(resourceContext)
-            };
         }
 
         private IncludeExpression ComposeChildren(QueryLayer topLayer, ICollection<ExpressionInScope> constraints)
         {
-            // @formatter:wrap_chained_method_calls chop_always
-            // @formatter:keep_existing_linebreaks true
+            using (CodeTimingSessionManager.Current.Measure("Nested query composition"))
+            {
+                // @formatter:wrap_chained_method_calls chop_always
+                // @formatter:keep_existing_linebreaks true
 
-            IncludeExpression include = constraints
-                .Where(constraint => constraint.Scope == null)
-                .Select(constraint => constraint.Expression)
-                .OfType<IncludeExpression>()
-                .FirstOrDefault() ?? IncludeExpression.Empty;
+                IncludeExpression include = constraints
+                    .Where(constraint => constraint.Scope == null)
+                    .Select(constraint => constraint.Expression)
+                    .OfType<IncludeExpression>()
+                    .FirstOrDefault() ?? IncludeExpression.Empty;
 
-            // @formatter:keep_existing_linebreaks restore
-            // @formatter:wrap_chained_method_calls restore
+                // @formatter:keep_existing_linebreaks restore
+                // @formatter:wrap_chained_method_calls restore
 
-            IReadOnlyCollection<IncludeElementExpression> includeElements =
-                ProcessIncludeSet(include.Elements, topLayer, new List<RelationshipAttribute>(), constraints);
+                IReadOnlyCollection<IncludeElementExpression> includeElements =
+                    ProcessIncludeSet(include.Elements, topLayer, new List<RelationshipAttribute>(), constraints);
 
-            return !ReferenceEquals(includeElements, include.Elements)
-                ? includeElements.Any() ? new IncludeExpression(includeElements) : IncludeExpression.Empty
-                : include;
+                return !ReferenceEquals(includeElements, include.Elements)
+                    ? includeElements.Any() ? new IncludeExpression(includeElements) : IncludeExpression.Empty
+                    : include;
+            }
         }
 
         private IReadOnlyCollection<IncludeElementExpression> ProcessIncludeSet(IReadOnlyCollection<IncludeElementExpression> includeElements,
