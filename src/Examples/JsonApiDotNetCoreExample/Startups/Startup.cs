@@ -67,10 +67,10 @@ namespace JsonApiDotNetCoreExample.Startups
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
+            ILogger<Startup> logger = loggerFactory.CreateLogger<Startup>();
+
             using (CodeTimingSessionManager.Current.Measure("Initialize other (startup)"))
             {
-                ILogger<Startup> logger = loggerFactory.CreateLogger<Startup>();
-
                 CreateTestData(app);
 
                 app.UseRouting();
@@ -81,10 +81,10 @@ namespace JsonApiDotNetCoreExample.Startups
                 }
 
                 app.UseEndpoints(endpoints => endpoints.MapControllers());
-
-                string result = CodeTimingSessionManager.Current.GetResult();
-                logger.LogWarning($"Measurement results for application startup:{Environment.NewLine}{result}");
             }
+
+            string result = CodeTimingSessionManager.Current.GetResult();
+            logger.LogWarning($"Measurement results for application startup:{Environment.NewLine}{result}");
 
             _codeTimingSession.Dispose();
         }

@@ -70,20 +70,46 @@ namespace JsonApiDotNetCore.Diagnostics
         /// <inheritdoc />
         public string GetResult()
         {
+            int paddingLength = GetPaddingLength();
+
             var builder = new StringBuilder();
+            WriteResult(builder, paddingLength);
+
+            return builder.ToString();
+        }
+
+        private int GetPaddingLength()
+        {
+            int maxLength = 0;
 
             foreach (MeasureScope scope in _completedScopes)
             {
-                scope.WriteResult(builder, 0);
+                int nextLength = scope.GetPaddingLength();
+                maxLength = Math.Max(maxLength, nextLength);
             }
 
             if (_activeScopeStack.Any())
             {
                 MeasureScope scope = _activeScopeStack.Peek();
-                scope.WriteResult(builder, 0);
+                int nextLength = scope.GetPaddingLength();
+                maxLength = Math.Max(maxLength, nextLength);
             }
 
-            return builder.ToString();
+            return maxLength + 3;
+        }
+
+        private void WriteResult(StringBuilder builder, int paddingLength)
+        {
+            foreach (MeasureScope scope in _completedScopes)
+            {
+                scope.WriteResult(builder, 0, paddingLength);
+            }
+
+            if (_activeScopeStack.Any())
+            {
+                MeasureScope scope = _activeScopeStack.Peek();
+                scope.WriteResult(builder, 0, paddingLength);
+            }
         }
 
         public void Dispose()
@@ -132,6 +158,25 @@ namespace JsonApiDotNetCore.Diagnostics
                 return childScope;
             }
 
+            public int GetPaddingLength()
+            {
+                return GetPaddingLength(0);
+            }
+
+            private int GetPaddingLength(int indent)
+            {
+                int selfLength = indent * 2 + Name.Length;
+                int maxChildrenLength = 0;
+
+                foreach (MeasureScope child in _children)
+                {
+                    int nextLength = child.GetPaddingLength(indent + 1);
+                    maxChildrenLength = Math.Max(nextLength, maxChildrenLength);
+                }
+
+                return Math.Max(selfLength, maxChildrenLength);
+            }
+
             private TimeSpan GetElapsedInSelf()
             {
                 return GetElapsedInTotal() - GetElapsedInChildren();
@@ -175,26 +220,26 @@ namespace JsonApiDotNetCore.Diagnostics
                 return skippedInChildren;
             }
 
-            public void WriteResult(StringBuilder builder, int indent)
+            public void WriteResult(StringBuilder builder, int indent, int paddingLength)
             {
                 TimeSpan timeElapsedGlobal = GetElapsedInTotal() - GetSkippedInTotal();
-                WriteResult(builder, indent, timeElapsedGlobal);
+                WriteResult(builder, indent, timeElapsedGlobal, paddingLength);
             }
 
-            private void WriteResult(StringBuilder builder, int indent, TimeSpan timeElapsedGlobal)
+            private void WriteResult(StringBuilder builder, int indent, TimeSpan timeElapsedGlobal, int paddingLength)
             {
                 TimeSpan timeElapsedInSelf = GetElapsedInSelf();
                 double scaleElapsedInSelf = timeElapsedGlobal != TimeSpan.Zero ? timeElapsedInSelf / timeElapsedGlobal : 0;
 
                 WriteIndent(builder, indent);
                 builder.Append(Name);
-                builder.Append(": ");
-                builder.Append(timeElapsedInSelf.ToString("G", CultureInfo.InvariantCulture));
+                WritePadding(builder, indent, paddingLength);
+                builder.AppendFormat(CultureInfo.InvariantCulture, "{0,19:G}", timeElapsedInSelf);
 
                 if (!_excludeInRelativeCost)
                 {
-                    builder.Append(" - ");
-                    builder.Append(scaleElapsedInSelf.ToString("P", CultureInfo.InvariantCulture));
+                    builder.Append(" ... ");
+                    builder.AppendFormat(CultureInfo.InvariantCulture, "{0,7:#0.00%}", scaleElapsedInSelf);
                 }
 
                 if (_stoppedAt == null)
@@ -206,13 +251,21 @@ namespace JsonApiDotNetCore.Diagnostics
 
                 foreach (MeasureScope child in _children)
                 {
-                    child.WriteResult(builder, indent + 1, timeElapsedGlobal);
+                    child.WriteResult(builder, indent + 1, timeElapsedGlobal, paddingLength);
                 }
             }
 
             private static void WriteIndent(StringBuilder builder, int indent)
             {
                 builder.Append(new string(' ', indent * 2));
+            }
+
+            private void WritePadding(StringBuilder builder, int indent, int paddingLength)
+            {
+                string padding = new string('.', paddingLength - Name.Length - indent * 2);
+                builder.Append(' ');
+                builder.Append(padding);
+                builder.Append(' ');
             }
 
             public void Dispose()
