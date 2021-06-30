@@ -99,7 +99,7 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNull(defaultSettings, nameof(defaultSettings));
 
-            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Serialize"))
+            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Serialize", MeasurementConstants.ExcludeNewtonsoftJsonInPercentages))
             {
                 var serializer = JsonSerializer.CreateDefault(defaultSettings);
                 changeSerializer?.Invoke(serializer);

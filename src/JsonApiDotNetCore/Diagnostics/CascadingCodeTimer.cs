@@ -33,22 +33,23 @@ namespace JsonApiDotNetCore.Diagnostics
             Thread.CurrentThread.Priority = ThreadPriority.Highest;
         }
 
-        public IDisposable Measure(string name)
+        /// <inheritdoc />
+        public IDisposable Measure(string name, bool excludeInRelativeCost = false)
         {
-            MeasureScope childScope = CreateChildScope(name);
+            MeasureScope childScope = CreateChildScope(name, excludeInRelativeCost);
             _activeScopeStack.Push(childScope);
 
             return childScope;
         }
 
-        private MeasureScope CreateChildScope(string name)
+        private MeasureScope CreateChildScope(string name, bool excludeInRelativeCost)
         {
             if (_activeScopeStack.TryPeek(out MeasureScope topScope))
             {
-                return topScope.SpawnChild(this, name);
+                return topScope.SpawnChild(this, name, excludeInRelativeCost);
             }
 
-            return new MeasureScope(this, name);
+            return new MeasureScope(this, name, excludeInRelativeCost);
         }
 
         private void Close(MeasureScope scope)
@@ -66,6 +67,7 @@ namespace JsonApiDotNetCore.Diagnostics
             }
         }
 
+        /// <inheritdoc />
         public string GetResult()
         {
             var builder = new StringBuilder();
@@ -99,14 +101,16 @@ namespace JsonApiDotNetCore.Diagnostics
         {
             private readonly CascadingCodeTimer _owner;
             private readonly IList<MeasureScope> _children = new List<MeasureScope>();
+            private readonly bool _excludeInRelativeCost;
             private readonly TimeSpan _startedAt;
             private TimeSpan? _stoppedAt;
 
             public string Name { get; }
 
-            public MeasureScope(CascadingCodeTimer owner, string name)
+            public MeasureScope(CascadingCodeTimer owner, string name, bool excludeInRelativeCost)
             {
                 _owner = owner;
+                _excludeInRelativeCost = excludeInRelativeCost;
                 Name = name;
 
                 EnsureRunning();
@@ -121,9 +125,9 @@ namespace JsonApiDotNetCore.Diagnostics
                 }
             }
 
-            public MeasureScope SpawnChild(CascadingCodeTimer owner, string name)
+            public MeasureScope SpawnChild(CascadingCodeTimer owner, string name, bool excludeInRelativeCost)
             {
-                var childScope = new MeasureScope(owner, name);
+                var childScope = new MeasureScope(owner, name, excludeInRelativeCost);
                 _children.Add(childScope);
                 return childScope;
             }
@@ -151,23 +155,47 @@ namespace JsonApiDotNetCore.Diagnostics
                 return elapsedInChildren;
             }
 
+            private TimeSpan GetSkippedInTotal()
+            {
+                TimeSpan skippedInSelf = _excludeInRelativeCost ? GetElapsedInSelf() : TimeSpan.Zero;
+                TimeSpan skippedInChildren = GetSkippedInChildren();
+
+                return skippedInSelf + skippedInChildren;
+            }
+
+            private TimeSpan GetSkippedInChildren()
+            {
+                TimeSpan skippedInChildren = TimeSpan.Zero;
+
+                foreach (MeasureScope childScope in _children)
+                {
+                    skippedInChildren += childScope.GetSkippedInTotal();
+                }
+
+                return skippedInChildren;
+            }
+
             public void WriteResult(StringBuilder builder, int indent)
             {
-                TimeSpan timeElapsedGlobal = GetElapsedInTotal();
+                TimeSpan timeElapsedGlobal = GetElapsedInTotal() - GetSkippedInTotal();
                 WriteResult(builder, indent, timeElapsedGlobal);
             }
 
             private void WriteResult(StringBuilder builder, int indent, TimeSpan timeElapsedGlobal)
             {
                 TimeSpan timeElapsedInSelf = GetElapsedInSelf();
-                double scaleElapsedInSelf = timeElapsedInSelf / timeElapsedGlobal;
+                double scaleElapsedInSelf = timeElapsedGlobal != TimeSpan.Zero ? timeElapsedInSelf / timeElapsedGlobal : 0;
 
                 WriteIndent(builder, indent);
                 builder.Append(Name);
                 builder.Append(": ");
                 builder.Append(timeElapsedInSelf.ToString("G", CultureInfo.InvariantCulture));
-                builder.Append(" - ");
-                builder.Append(scaleElapsedInSelf.ToString("P", CultureInfo.InvariantCulture));
+
+                if (!_excludeInRelativeCost)
+                {
+                    builder.Append(" - ");
+                    builder.Append(scaleElapsedInSelf.ToString("P", CultureInfo.InvariantCulture));
+                }
 
                 if (_stoppedAt == null)
                 {

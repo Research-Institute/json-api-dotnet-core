@@ -62,7 +62,7 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNullNorEmpty(body, nameof(body));
 
-            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Deserialize"))
+            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Deserialize", MeasurementConstants.ExcludeNewtonsoftJsonInPercentages))
             {
                 JToken bodyJToken = LoadJToken(body);
                 Document = bodyJToken.ToObject<Document>();

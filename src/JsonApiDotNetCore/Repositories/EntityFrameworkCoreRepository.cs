@@ -77,7 +77,7 @@ namespace JsonApiDotNetCore.Repositories
             {
                 IQueryable<TResource> query = ApplyQueryLayer(layer);
 
-                using (CodeTimingSessionManager.Current.Measure("Execute SQL (data)"))
+                using (CodeTimingSessionManager.Current.Measure("Execute SQL (data)", MeasurementConstants.ExcludeEfCoreInPercentages))
                 {
                     return await query.ToListAsync(cancellationToken);
                 }
@@ -103,7 +103,7 @@ namespace JsonApiDotNetCore.Repositories
 
                 IQueryable<TResource> query = ApplyQueryLayer(layer);
 
-                using (CodeTimingSessionManager.Current.Measure("Execute SQL (count)"))
+                using (CodeTimingSessionManager.Current.Measure("Execute SQL (count)", MeasurementConstants.ExcludeEfCoreInPercentages))
                 {
                     return await query.CountAsync(cancellationToken);
                 }
@@ -563,7 +563,7 @@ namespace JsonApiDotNetCore.Repositories
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using (CodeTimingSessionManager.Current.Measure("Persist EF Core changes"))
+            using (CodeTimingSessionManager.Current.Measure("Persist EF Core changes", MeasurementConstants.ExcludeEfCoreInPercentages))
             {
                 try
                 {

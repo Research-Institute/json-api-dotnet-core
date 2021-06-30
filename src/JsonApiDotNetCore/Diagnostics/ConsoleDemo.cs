@@ -1,5 +1,4 @@
 #if DEBUG
-
 using System;
 using System.Threading.Tasks;
 
@@ -72,5 +71,4 @@ namespace JsonApiDotNetCore.Diagnostics
         }
     }
 }
-
 #endif

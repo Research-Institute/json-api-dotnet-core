@@ -14,7 +14,10 @@ namespace JsonApiDotNetCore.Diagnostics
         /// <param name="name">
         /// Description of what is being recorded.
         /// </param>
-        IDisposable Measure(string name);
+        /// <param name="excludeInRelativeCost">
+        /// When set, indicates to exclude this measurement in calculated percentages. <c>false</c> by default.
+        /// </param>
+        IDisposable Measure(string name, bool excludeInRelativeCost = false);
 
         /// <summary>
         /// Returns intermediate or final results.

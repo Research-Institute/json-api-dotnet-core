@@ -15,7 +15,7 @@ namespace JsonApiDotNetCore.Diagnostics
         {
         }
 
-        public IDisposable Measure(string name)
+        public IDisposable Measure(string name, bool excludeInRelativeCost = false)
         {
             return this;
         }
