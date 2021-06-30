@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using JetBrains.Annotations;
@@ -21,16 +22,19 @@ namespace JsonApiDotNetCore.Diagnostics
 
         static CascadingCodeTimer()
         {
-            // Be default, measurements using Stopwatch can differ 25%-30% on the same function on the same computer.
-            // The steps below ensure to get an accuracy of 0.1%-0.2%. With this accuracy, algorithms can be tested and compared.
-            // https://www.codeproject.com/Articles/61964/Performance-Tests-Precise-Run-Time-Measurements-wi
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Be default, measurements using Stopwatch can differ 25%-30% on the same function on the same computer.
+                // The steps below ensure to get an accuracy of 0.1%-0.2%. With this accuracy, algorithms can be tested and compared.
+                // https://www.codeproject.com/Articles/61964/Performance-Tests-Precise-Run-Time-Measurements-wi
 
-            // The most important thing is to prevent switching between CPU cores or processors. Switching dismisses the cache, etc. and has a huge performance impact on the test.
-            Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2);
+                // The most important thing is to prevent switching between CPU cores or processors. Switching dismisses the cache, etc. and has a huge performance impact on the test.
+                Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2);
 
-            // To get the CPU core more exclusively, we must prevent that other threads can use this CPU core. We set our process and thread priority to achieve this.
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-            Thread.CurrentThread.Priority = ThreadPriority.Highest;
+                // To get the CPU core more exclusively, we must prevent that other threads can use this CPU core. We set our process and thread priority to achieve this.
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+                Thread.CurrentThread.Priority = ThreadPriority.Highest;
+            }
         }
 
         /// <inheritdoc />

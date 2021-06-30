@@ -15,6 +15,8 @@ namespace JsonApiDotNetCoreExample.Startups
         {
         }
 
+        // ReSharper disable once UnusedMemberInSuper.Global
+        // ReSharper disable once UnusedParameter.Global
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
         }
