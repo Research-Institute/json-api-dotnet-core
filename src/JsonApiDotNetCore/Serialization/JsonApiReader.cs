@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Errors;
 using JsonApiDotNetCore.Middleware;
 using JsonApiDotNetCore.Resources;
@@ -47,41 +48,44 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNull(context, nameof(context));
 
-            string body = await GetRequestBodyAsync(context.HttpContext.Request.Body);
-
-            string url = context.HttpContext.Request.GetEncodedUrl();
-            _traceWriter.LogMessage(() => $"Received request at '{url}' with body: <<{body}>>");
-
-            object model = null;
-
-            if (!string.IsNullOrWhiteSpace(body))
+            using (CodeTimingSessionManager.Current.Measure("Deserialize request body"))
             {
-                try
+                string body = await GetRequestBodyAsync(context.HttpContext.Request.Body);
+
+                string url = context.HttpContext.Request.GetEncodedUrl();
+                _traceWriter.LogMessage(() => $"Received request at '{url}' with body: <<{body}>>");
+
+                object model = null;
+
+                if (!string.IsNullOrWhiteSpace(body))
                 {
-                    model = _deserializer.Deserialize(body);
-                }
-                catch (JsonApiSerializationException exception)
-                {
-                    throw ToInvalidRequestBodyException(exception, body);
-                }
+                    try
+                    {
+                        model = _deserializer.Deserialize(body);
+                    }
+                    catch (JsonApiSerializationException exception)
+                    {
+                        throw ToInvalidRequestBodyException(exception, body);
+                    }
 #pragma warning disable AV1210 // Catch a specific exception instead of Exception, SystemException or ApplicationException
-                catch (Exception exception)
+                    catch (Exception exception)
 #pragma warning restore AV1210 // Catch a specific exception instead of Exception, SystemException or ApplicationException
-                {
-                    throw new InvalidRequestBodyException(null, null, body, exception);
+                    {
+                        throw new InvalidRequestBodyException(null, null, body, exception);
+                    }
                 }
-            }
 
-            if (_request.Kind == EndpointKind.AtomicOperations)
-            {
-                AssertHasRequestBody(model, body);
-            }
-            else if (RequiresRequestBody(context.HttpContext.Request.Method))
-            {
-                ValidateRequestBody(model, body, context.HttpContext.Request);
-            }
+                if (_request.Kind == EndpointKind.AtomicOperations)
+                {
+                    AssertHasRequestBody(model, body);
+                }
+                else if (RequiresRequestBody(context.HttpContext.Request.Method))
+                {
+                    ValidateRequestBody(model, body, context.HttpContext.Request);
+                }
 
-            return await InputFormatterResult.SuccessAsync(model);
+                return await InputFormatterResult.SuccessAsync(model);
+            }
         }
 
         private async Task<string> GetRequestBodyAsync(Stream bodyStream)

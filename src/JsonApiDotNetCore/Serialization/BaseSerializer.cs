@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
 using JsonApiDotNetCore.Serialization.Building;
@@ -48,10 +49,13 @@ namespace JsonApiDotNetCore.Serialization
                 return new Document();
             }
 
-            return new Document
+            using (CodeTimingSessionManager.Current.Measure("Serializer.Build (single)"))
             {
-                Data = ResourceObjectBuilder.Build(resource, attributes, relationships)
-            };
+                return new Document
+                {
+                    Data = ResourceObjectBuilder.Build(resource, attributes, relationships)
+                };
+            }
         }
 
         /// <summary>
@@ -75,31 +79,38 @@ namespace JsonApiDotNetCore.Serialization
         {
             ArgumentGuard.NotNull(resources, nameof(resources));
 
-            var data = new List<ResourceObject>();
-
-            foreach (IIdentifiable resource in resources)
+            using (CodeTimingSessionManager.Current.Measure("Serializer.Build (list)"))
             {
-                data.Add(ResourceObjectBuilder.Build(resource, attributes, relationships));
+                var data = new List<ResourceObject>();
+
+                foreach (IIdentifiable resource in resources)
+                {
+                    data.Add(ResourceObjectBuilder.Build(resource, attributes, relationships));
+                }
+
+                return new Document
+                {
+                    Data = data
+                };
             }
-
-            return new Document
-            {
-                Data = data
-            };
         }
 
         protected string SerializeObject(object value, JsonSerializerSettings defaultSettings, Action<JsonSerializer> changeSerializer = null)
         {
             ArgumentGuard.NotNull(defaultSettings, nameof(defaultSettings));
 
-            var serializer = JsonSerializer.CreateDefault(defaultSettings);
-            changeSerializer?.Invoke(serializer);
+            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Serialize", MeasurementConstants.ExcludeNewtonsoftJsonInPercentages))
+            {
+                var serializer = JsonSerializer.CreateDefault(defaultSettings);
+                changeSerializer?.Invoke(serializer);
 
-            using var stringWriter = new StringWriter();
-            using var jsonWriter = new JsonTextWriter(stringWriter);
+                using var stringWriter = new StringWriter();
+                using var jsonWriter = new JsonTextWriter(stringWriter);
 
-            serializer.Serialize(jsonWriter, value);
-            return stringWriter.ToString();
+                serializer.Serialize(jsonWriter, value);
+
+                return stringWriter.ToString();
+            }
         }
     }
 }

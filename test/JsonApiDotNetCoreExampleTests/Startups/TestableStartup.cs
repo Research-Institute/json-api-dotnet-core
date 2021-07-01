@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -24,7 +25,7 @@ namespace JsonApiDotNetCoreExampleTests.Startups
             options.SerializerSettings.Converters.Add(new StringEnumConverter());
         }
 
-        public override void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+        public override void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
             app.UseRouting();
             app.UseJsonApi();

@@ -6,6 +6,7 @@ using System.Net.Http;
 using Humanizer;
 using JetBrains.Annotations;
 using JsonApiDotNetCore.Configuration;
+using JsonApiDotNetCore.Diagnostics;
 using JsonApiDotNetCore.Middleware;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
@@ -76,8 +77,13 @@ namespace JsonApiDotNetCore.Serialization
 
         private object DeserializeOperationsDocument(string body)
         {
-            JToken bodyToken = LoadJToken(body);
-            var document = bodyToken.ToObject<AtomicOperationsDocument>();
+            AtomicOperationsDocument document;
+
+            using (CodeTimingSessionManager.Current.Measure("Newtonsoft.Deserialize", MeasurementConstants.ExcludeNewtonsoftJsonInPercentages))
+            {
+                JToken bodyToken = LoadJToken(body);
+                document = bodyToken.ToObject<AtomicOperationsDocument>();
+            }
 
             if ((document?.Operations).IsNullOrEmpty())
             {
