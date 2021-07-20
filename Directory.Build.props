@@ -22,7 +22,7 @@
   <!-- Test Project Dependencies -->
   <PropertyGroup>
     <BogusVersion>33.0.2</BogusVersion>
-    <CoverletVersion>3.0.3</CoverletVersion>
+    <CoverletVersion>3.1.0</CoverletVersion>
     <FluentAssertionsVersion>5.10.3</FluentAssertionsVersion>
     <MoqVersion>4.16.1</MoqVersion>
     <XUnitVersion>2.4.*</XUnitVersion>
