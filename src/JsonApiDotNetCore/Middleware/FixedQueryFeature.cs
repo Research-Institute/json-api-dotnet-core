@@ -27,7 +27,7 @@ namespace JsonApiDotNetCore.Middleware
         {
             get
             {
-                if (_features.Collection == null)
+                if (IsFeatureCollectionNull())
                 {
                     return _parsedValues ??= QueryCollection.Empty;
                 }
@@ -49,7 +49,7 @@ namespace JsonApiDotNetCore.Middleware
             {
                 _parsedValues = value;
 
-                if (_features.Collection != null)
+                if (!IsFeatureCollectionNull())
                 {
                     if (value == null)
                     {
@@ -76,6 +76,13 @@ namespace JsonApiDotNetCore.Middleware
             ArgumentGuard.NotNull(features, nameof(features));
 
             _features.Initalize(features);
+        }
+
+        private bool IsFeatureCollectionNull()
+        {
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            // Justification: This code was copied from the ASP.NET sources. A struct instance can be created without calling one of its constructors.
+            return _features.Collection == null;
         }
     }
 }

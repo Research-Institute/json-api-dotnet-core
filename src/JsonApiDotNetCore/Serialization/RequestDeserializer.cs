@@ -146,7 +146,7 @@ namespace JsonApiDotNetCore.Serialization
             {
                 case AtomicOperationCode.Add:
                 {
-                    if (operation.Ref != null && operation.Ref.Relationship == null)
+                    if (operation.Ref is { Relationship: null })
                     {
                         throw new JsonApiSerializationException("The 'ref.relationship' element is required.", null,
                             atomicOperationIndex: AtomicOperationIndex);
@@ -523,14 +523,14 @@ namespace JsonApiDotNetCore.Serialization
         {
             return _request.Kind == EndpointKind.AtomicOperations
                 ? _request.OperationKind == OperationKind.CreateResource
-                : _request.Kind == EndpointKind.Primary && _httpContextAccessor.HttpContext.Request.Method == HttpMethod.Post.Method;
+                : _request.Kind == EndpointKind.Primary && _httpContextAccessor.HttpContext!.Request.Method == HttpMethod.Post.Method;
         }
 
         private bool IsUpdatingResource()
         {
             return _request.Kind == EndpointKind.AtomicOperations
                 ? _request.OperationKind == OperationKind.UpdateResource
-                : _request.Kind == EndpointKind.Primary && _httpContextAccessor.HttpContext.Request.Method == HttpMethod.Patch.Method;
+                : _request.Kind == EndpointKind.Primary && _httpContextAccessor.HttpContext!.Request.Method == HttpMethod.Patch.Method;
         }
     }
 }

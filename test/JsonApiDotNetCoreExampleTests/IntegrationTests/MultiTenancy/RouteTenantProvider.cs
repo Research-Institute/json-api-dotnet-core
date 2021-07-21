@@ -19,8 +19,13 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
         {
             get
             {
+                if (_httpContextAccessor.HttpContext == null)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 string countryCode = (string)_httpContextAccessor.HttpContext.Request.RouteValues["countryCode"];
-                return TenantRegistry.ContainsKey(countryCode) ? TenantRegistry[countryCode] : Guid.Empty;
+                return countryCode != null && TenantRegistry.ContainsKey(countryCode) ? TenantRegistry[countryCode] : Guid.Empty;
             }
         }
 

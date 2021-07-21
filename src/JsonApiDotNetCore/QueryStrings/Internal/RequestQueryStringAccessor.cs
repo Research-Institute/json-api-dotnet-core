@@ -7,7 +7,7 @@ namespace JsonApiDotNetCore.QueryStrings.Internal
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IQueryCollection Query => _httpContextAccessor.HttpContext.Request.Query;
+        public IQueryCollection Query => _httpContextAccessor.HttpContext!.Request.Query;
 
         public RequestQueryStringAccessor(IHttpContextAccessor httpContextAccessor)
         {

@@ -31,7 +31,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Logging
                 options.ClearProviders();
                 options.AddProvider(loggerFactory);
                 options.SetMinimumLevel(LogLevel.Trace);
-                options.AddFilter((_, __) => true);
+                options.AddFilter((_, _) => true);
             });
 
             testContext.ConfigureServicesBeforeStartup(services =>

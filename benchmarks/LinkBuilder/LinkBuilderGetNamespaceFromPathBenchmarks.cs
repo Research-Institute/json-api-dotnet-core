@@ -67,7 +67,7 @@ namespace Benchmarks.LinkBuilder
 
                             if (isAtEnd || hasDelimiterAfterSegment)
                             {
-                                _ = pathSpan.Slice(0, index).ToString();
+                                _ = pathSpan[..index].ToString();
                             }
                         }
                     }

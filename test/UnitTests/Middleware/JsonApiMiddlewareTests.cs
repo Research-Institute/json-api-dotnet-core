@@ -159,7 +159,7 @@ namespace UnitTests.Middleware
                 ControllerTypeInfo = (TypeInfo)typeof(object)
             };
 
-            context.SetEndpoint(new Endpoint(null, new EndpointMetadataCollection(controllerActionDescriptor), null));
+            context.SetEndpoint(new Endpoint(_ => Task.CompletedTask, new EndpointMetadataCollection(controllerActionDescriptor), null));
             return context;
         }
 
@@ -192,12 +192,12 @@ namespace UnitTests.Middleware
 
         private sealed class InvokeConfiguration
         {
-            public JsonApiMiddleware MiddleWare { get; set; }
-            public HttpContext HttpContext { get; set; }
-            public Mock<IControllerResourceMapping> ControllerResourceMapping { get; set; }
-            public Mock<IJsonApiOptions> Options { get; set; }
-            public JsonApiRequest Request { get; set; }
-            public Mock<IResourceGraph> ResourceGraph { get; set; }
+            public JsonApiMiddleware MiddleWare { get; init; }
+            public HttpContext HttpContext { get; init; }
+            public Mock<IControllerResourceMapping> ControllerResourceMapping { get; init; }
+            public Mock<IJsonApiOptions> Options { get; init; }
+            public JsonApiRequest Request { get; init; }
+            public Mock<IResourceGraph> ResourceGraph { get; init; }
         }
     }
 }
