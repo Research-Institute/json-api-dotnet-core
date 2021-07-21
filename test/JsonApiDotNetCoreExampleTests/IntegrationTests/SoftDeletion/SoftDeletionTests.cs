@@ -23,7 +23,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
         private static readonly DateTimeOffset SoftDeletionTime = 1.January(2001).ToDateTimeOffset();
 
         private readonly ExampleIntegrationTestContext<TestableStartup<SoftDeletionDbContext>, SoftDeletionDbContext> _testContext;
-        private readonly SoftDeletionFakers _fakers = new SoftDeletionFakers();
+        private readonly SoftDeletionFakers _fakers = new();
 
         public SoftDeletionTests(ExampleIntegrationTestContext<TestableStartup<SoftDeletionDbContext>, SoftDeletionDbContext> testContext)
         {

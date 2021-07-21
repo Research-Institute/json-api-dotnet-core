@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.FireAndFo
     public sealed partial class FireForgetTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<FireForgetDbContext>, FireForgetDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<FireForgetDbContext>, FireForgetDbContext> _testContext;
-        private readonly DomainFakers _fakers = new DomainFakers();
+        private readonly DomainFakers _fakers = new();
 
         public FireForgetTests(ExampleIntegrationTestContext<TestableStartup<FireForgetDbContext>, FireForgetDbContext> testContext)
         {

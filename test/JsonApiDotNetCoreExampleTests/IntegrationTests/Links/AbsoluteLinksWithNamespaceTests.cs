@@ -19,7 +19,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
         private const string HostPrefix = "http://localhost";
 
         private readonly ExampleIntegrationTestContext<AbsoluteLinksInApiNamespaceStartup<LinksDbContext>, LinksDbContext> _testContext;
-        private readonly LinksFakers _fakers = new LinksFakers();
+        private readonly LinksFakers _fakers = new();
 
         public AbsoluteLinksWithNamespaceTests(ExampleIntegrationTestContext<AbsoluteLinksInApiNamespaceStartup<LinksDbContext>, LinksDbContext> testContext)
         {

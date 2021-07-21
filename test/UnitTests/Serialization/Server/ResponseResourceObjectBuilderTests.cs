@@ -70,7 +70,7 @@ namespace UnitTests.Serialization.Server
                 Id = 10,
                 Dependents = new HashSet<OneToManyDependent>
                 {
-                    new OneToManyDependent
+                    new()
                     {
                         Id = 20
                     }
@@ -98,7 +98,7 @@ namespace UnitTests.Serialization.Server
                 Id = 10,
                 Dependents = new HashSet<OneToManyDependent>
                 {
-                    new OneToManyDependent
+                    new()
                     {
                         Id = 20
                     }

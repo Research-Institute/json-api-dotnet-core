@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
     public sealed class IdObfuscationTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext> _testContext;
-        private readonly ObfuscationFakers _fakers = new ObfuscationFakers();
+        private readonly ObfuscationFakers _fakers = new();
 
         public IdObfuscationTests(ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext> testContext)
         {

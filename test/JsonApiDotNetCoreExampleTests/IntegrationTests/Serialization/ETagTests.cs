@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
     public sealed class ETagTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> _testContext;
-        private readonly SerializationFakers _fakers = new SerializationFakers();
+        private readonly SerializationFakers _fakers = new();
 
         public ETagTests(ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> testContext)
         {

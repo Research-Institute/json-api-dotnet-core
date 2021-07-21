@@ -20,8 +20,8 @@ namespace Benchmarks.Query
     [MemoryDiagnoser]
     public class QueryParserBenchmarks
     {
-        private readonly DependencyFactory _dependencyFactory = new DependencyFactory();
-        private readonly FakeRequestQueryStringAccessor _queryStringAccessor = new FakeRequestQueryStringAccessor();
+        private readonly DependencyFactory _dependencyFactory = new();
+        private readonly FakeRequestQueryStringAccessor _queryStringAccessor = new();
         private readonly QueryStringReader _queryStringReaderForSort;
         private readonly QueryStringReader _queryStringReaderForAll;
 

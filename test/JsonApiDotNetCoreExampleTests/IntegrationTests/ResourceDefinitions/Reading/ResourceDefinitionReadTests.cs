@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Rea
     public sealed class ResourceDefinitionReadTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<UniverseDbContext>, UniverseDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<UniverseDbContext>, UniverseDbContext> _testContext;
-        private readonly UniverseFakers _fakers = new UniverseFakers();
+        private readonly UniverseFakers _fakers = new();
 
         public ResourceDefinitionReadTests(ExampleIntegrationTestContext<TestableStartup<UniverseDbContext>, UniverseDbContext> testContext)
         {

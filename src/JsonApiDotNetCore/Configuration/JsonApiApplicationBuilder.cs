@@ -30,7 +30,7 @@ namespace JsonApiDotNetCore.Configuration
     /// </summary>
     internal sealed class JsonApiApplicationBuilder : IJsonApiApplicationBuilder, IDisposable
     {
-        private readonly JsonApiOptions _options = new JsonApiOptions();
+        private readonly JsonApiOptions _options = new();
         private readonly IServiceCollection _services;
         private readonly IMvcCoreBuilder _mvcBuilder;
         private readonly ResourceGraphBuilder _resourceGraphBuilder;

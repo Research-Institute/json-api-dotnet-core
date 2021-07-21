@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices
         private readonly DbSet<DomainUser> _userSet;
         private readonly DbSet<DomainGroup> _groupSet;
         private readonly ResourceDefinitionHitCounter _hitCounter;
-        private readonly List<OutgoingMessage> _pendingMessages = new List<OutgoingMessage>();
+        private readonly List<OutgoingMessage> _pendingMessages = new();
 
         private string _beforeGroupName;
 

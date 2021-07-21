@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Includes
     public sealed class IncludeTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> _testContext;
-        private readonly QueryStringFakers _fakers = new QueryStringFakers();
+        private readonly QueryStringFakers _fakers = new();
 
         public IncludeTests(ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> testContext)
         {
@@ -234,7 +234,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Includes
 
             post.BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }
@@ -272,7 +272,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Includes
 
             post.BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }

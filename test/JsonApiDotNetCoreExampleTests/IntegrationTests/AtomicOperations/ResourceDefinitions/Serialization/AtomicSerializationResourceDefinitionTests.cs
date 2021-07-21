@@ -19,7 +19,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicSerializationResourceDefinitionTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {

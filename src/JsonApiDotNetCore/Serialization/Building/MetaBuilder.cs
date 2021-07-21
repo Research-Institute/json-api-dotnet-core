@@ -14,7 +14,7 @@ namespace JsonApiDotNetCore.Serialization.Building
         private readonly IJsonApiOptions _options;
         private readonly IResponseMeta _responseMeta;
 
-        private Dictionary<string, object> _meta = new Dictionary<string, object>();
+        private Dictionary<string, object> _meta = new();
 
         public MetaBuilder(IPaginationContext paginationContext, IJsonApiOptions options, IResponseMeta responseMeta)
         {

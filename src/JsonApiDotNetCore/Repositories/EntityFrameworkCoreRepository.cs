@@ -28,7 +28,7 @@ namespace JsonApiDotNetCore.Repositories
     public class EntityFrameworkCoreRepository<TResource, TId> : IResourceRepository<TResource, TId>, IRepositorySupportsTransaction
         where TResource : class, IIdentifiable<TId>
     {
-        private readonly CollectionConverter _collectionConverter = new CollectionConverter();
+        private readonly CollectionConverter _collectionConverter = new();
         private readonly ITargetedFields _targetedFields;
         private readonly DbContext _dbContext;
         private readonly IResourceGraph _resourceGraph;
@@ -499,7 +499,7 @@ namespace JsonApiDotNetCore.Repositories
             IIdentifiable[] rightResourcesTracked = rightResources.Select(collector.CaptureExisting).ToArray();
 
             return rightValue is IEnumerable
-                ? (object)_collectionConverter.CopyToTypedCollection(rightResourcesTracked, relationshipPropertyType)
+                ? _collectionConverter.CopyToTypedCollection(rightResourcesTracked, relationshipPropertyType)
                 : rightResourcesTracked.Single();
         }
 

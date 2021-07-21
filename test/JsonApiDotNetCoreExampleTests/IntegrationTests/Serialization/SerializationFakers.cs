@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
             TimeSpan.FromMinutes(60)
         };
 
-        private readonly Lazy<Faker<Meeting>> _lazyMeetingFaker = new Lazy<Faker<Meeting>>(() =>
+        private readonly Lazy<Faker<Meeting>> _lazyMeetingFaker = new(() =>
             new Faker<Meeting>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(meeting => meeting.Title, faker => faker.Lorem.Word())
@@ -26,7 +26,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
                 .RuleFor(meeting => meeting.Latitude, faker => faker.Address.Latitude())
                 .RuleFor(meeting => meeting.Longitude, faker => faker.Address.Longitude()));
 
-        private readonly Lazy<Faker<MeetingAttendee>> _lazyMeetingAttendeeFaker = new Lazy<Faker<MeetingAttendee>>(() =>
+        private readonly Lazy<Faker<MeetingAttendee>> _lazyMeetingAttendeeFaker = new(() =>
             new Faker<MeetingAttendee>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(attendee => attendee.DisplayName, faker => faker.Random.Utf16String()));

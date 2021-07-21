@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
     public sealed class ReplaceToManyRelationshipTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> _testContext;
-        private readonly ReadWriteFakers _fakers = new ReadWriteFakers();
+        private readonly ReadWriteFakers _fakers = new();
 
         public ReplaceToManyRelationshipTests(ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> testContext)
         {
@@ -935,7 +935,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
                 existingWorkItem.RelatedFromItems = new List<WorkItemToWorkItem>
                 {
-                    new WorkItemToWorkItem
+                    new()
                     {
                         FromItem = existingWorkItem
                     }

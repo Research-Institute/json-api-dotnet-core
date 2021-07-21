@@ -40,7 +40,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Rea
 
             return new List<IncludeElementExpression>(existingIncludes)
             {
-                new IncludeElementExpression(orbitsAroundRelationship)
+                new(orbitsAroundRelationship)
             };
         }
 

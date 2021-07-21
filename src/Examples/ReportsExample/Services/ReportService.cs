@@ -31,7 +31,7 @@ namespace ReportsExample.Services
         {
             return new List<Report>
             {
-                new Report
+                new()
                 {
                     Title = "Status Report",
                     Statistics = new ReportStatistics

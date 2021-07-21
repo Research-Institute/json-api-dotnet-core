@@ -15,26 +15,25 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.Request
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class WorkflowDefinition : JsonApiResourceDefinition<Workflow, Guid>
     {
-        private static readonly Dictionary<WorkflowStage, ICollection<WorkflowStage>> StageTransitionTable =
-            new Dictionary<WorkflowStage, ICollection<WorkflowStage>>
+        private static readonly Dictionary<WorkflowStage, ICollection<WorkflowStage>> StageTransitionTable = new()
+        {
+            [WorkflowStage.Created] = new[]
             {
-                [WorkflowStage.Created] = new[]
-                {
-                    WorkflowStage.InProgress
-                },
-                [WorkflowStage.InProgress] = new[]
-                {
-                    WorkflowStage.OnHold,
-                    WorkflowStage.Succeeded,
-                    WorkflowStage.Failed,
-                    WorkflowStage.Canceled
-                },
-                [WorkflowStage.OnHold] = new[]
-                {
-                    WorkflowStage.InProgress,
-                    WorkflowStage.Canceled
-                }
-            };
+                WorkflowStage.InProgress
+            },
+            [WorkflowStage.InProgress] = new[]
+            {
+                WorkflowStage.OnHold,
+                WorkflowStage.Succeeded,
+                WorkflowStage.Failed,
+                WorkflowStage.Canceled
+            },
+            [WorkflowStage.OnHold] = new[]
+            {
+                WorkflowStage.InProgress,
+                WorkflowStage.Canceled
+            }
+        };
 
         private WorkflowStage _previousStage;
 

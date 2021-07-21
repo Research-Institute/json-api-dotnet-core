@@ -10,7 +10,7 @@ namespace JsonApiDotNetCore.Queries.Internal.QueryableBuilding
     [PublicAPI]
     public sealed class LambdaParameterNameFactory
     {
-        private readonly HashSet<string> _namesInScope = new HashSet<string>();
+        private readonly HashSet<string> _namesInScope = new();
 
         public LambdaParameterNameScope Create(string typeName)
         {

@@ -6,7 +6,7 @@ namespace JsonApiDotNetCore.Serialization.Building
 {
     internal sealed class ResourceIdentifierObjectComparer : IEqualityComparer<ResourceIdentifierObject>
     {
-        public static readonly ResourceIdentifierObjectComparer Instance = new ResourceIdentifierObjectComparer();
+        public static readonly ResourceIdentifierObjectComparer Instance = new();
 
         private ResourceIdentifierObjectComparer()
         {

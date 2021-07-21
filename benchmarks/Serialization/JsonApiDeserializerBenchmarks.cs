@@ -29,7 +29,7 @@ namespace Benchmarks.Serialization
             }
         });
 
-        private readonly DependencyFactory _dependencyFactory = new DependencyFactory();
+        private readonly DependencyFactory _dependencyFactory = new();
         private readonly IJsonApiDeserializer _jsonApiDeserializer;
 
         public JsonApiDeserializerBenchmarks()

@@ -9,7 +9,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Logging
 {
     internal sealed class AuditFakers : FakerContainer
     {
-        private readonly Lazy<Faker<AuditEntry>> _lazyAuditEntryFaker = new Lazy<Faker<AuditEntry>>(() =>
+        private readonly Lazy<Faker<AuditEntry>> _lazyAuditEntryFaker = new(() =>
             new Faker<AuditEntry>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(auditEntry => auditEntry.UserName, faker => faker.Internet.UserName())

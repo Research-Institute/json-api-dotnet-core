@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.ModelS
         : IClassFixture<ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicModelStateValidationTests(ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {

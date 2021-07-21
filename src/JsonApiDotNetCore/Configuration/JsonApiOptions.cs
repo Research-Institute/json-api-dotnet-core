@@ -44,7 +44,7 @@ namespace JsonApiDotNetCore.Configuration
         public bool IncludeTotalResourceCount { get; set; }
 
         /// <inheritdoc />
-        public PageSize DefaultPageSize { get; set; } = new PageSize(10);
+        public PageSize DefaultPageSize { get; set; } = new(10);
 
         /// <inheritdoc />
         public PageSize MaximumPageSize { get; set; }
@@ -80,7 +80,7 @@ namespace JsonApiDotNetCore.Configuration
         public IsolationLevel? TransactionIsolationLevel { get; set; }
 
         /// <inheritdoc />
-        public JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
+        public JsonSerializerSettings SerializerSettings { get; } = new()
         {
             ContractResolver = new DefaultContractResolver
             {

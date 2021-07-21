@@ -317,12 +317,12 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CompositeKeys
                 Address = "Dam 1, 1012JS Amsterdam, the Netherlands",
                 Inventory = new HashSet<Car>
                 {
-                    new Car
+                    new()
                     {
                         RegionId = 123,
                         LicensePlate = "AA-BB-11"
                     },
-                    new Car
+                    new()
                     {
                         RegionId = 456,
                         LicensePlate = "CC-DD-22"
@@ -432,12 +432,12 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CompositeKeys
                 Address = "Dam 1, 1012JS Amsterdam, the Netherlands",
                 Inventory = new HashSet<Car>
                 {
-                    new Car
+                    new()
                     {
                         RegionId = 123,
                         LicensePlate = "AA-BB-11"
                     },
-                    new Car
+                    new()
                     {
                         RegionId = 456,
                         LicensePlate = "CC-DD-22"

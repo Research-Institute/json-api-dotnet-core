@@ -121,7 +121,7 @@ namespace JsonApiDotNetCore.Controllers
             }
 
             IList<OperationContainer> results = await _processor.ProcessAsync(operations, cancellationToken);
-            return results.Any(result => result != null) ? (IActionResult)Ok(results) : NoContent();
+            return results.Any(result => result != null) ? Ok(results) : NoContent();
         }
 
         protected virtual void ValidateClientGeneratedIds(IEnumerable<OperationContainer> operations)

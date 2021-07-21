@@ -10,13 +10,13 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Ser
 {
     internal sealed class SerializationFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Student>> _lazyStudentFaker = new Lazy<Faker<Student>>(() =>
+        private readonly Lazy<Faker<Student>> _lazyStudentFaker = new(() =>
             new Faker<Student>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(student => student.Name, faker => faker.Person.FullName)
                 .RuleFor(student => student.SocialSecurityNumber, faker => faker.Person.Ssn()));
 
-        private readonly Lazy<Faker<Scholarship>> _lazyScholarshipFaker = new Lazy<Faker<Scholarship>>(() =>
+        private readonly Lazy<Faker<Scholarship>> _lazyScholarshipFaker = new(() =>
             new Faker<Scholarship>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(scholarship => scholarship.ProgramName, faker => faker.Commerce.Department())

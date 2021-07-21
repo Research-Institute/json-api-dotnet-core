@@ -20,7 +20,7 @@ namespace JsonApiDotNetCore.QueryStrings.Internal
     {
         private readonly SparseFieldTypeParser _sparseFieldTypeParser;
         private readonly SparseFieldSetParser _sparseFieldSetParser;
-        private readonly Dictionary<ResourceContext, SparseFieldSetExpression> _sparseFieldTable = new Dictionary<ResourceContext, SparseFieldSetExpression>();
+        private readonly Dictionary<ResourceContext, SparseFieldSetExpression> _sparseFieldTable = new();
         private string _lastParameterName;
 
         /// <inheritdoc />

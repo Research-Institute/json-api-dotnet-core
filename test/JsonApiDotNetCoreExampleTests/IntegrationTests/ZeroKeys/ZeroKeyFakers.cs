@@ -9,18 +9,18 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
 {
     internal sealed class ZeroKeyFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Game>> _lazyGameFaker = new Lazy<Faker<Game>>(() =>
+        private readonly Lazy<Faker<Game>> _lazyGameFaker = new(() =>
             new Faker<Game>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(game => game.Title, faker => faker.Random.Words()));
 
-        private readonly Lazy<Faker<Player>> _lazyPlayerFaker = new Lazy<Faker<Player>>(() =>
+        private readonly Lazy<Faker<Player>> _lazyPlayerFaker = new(() =>
             new Faker<Player>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(player => player.Id, faker => faker.Person.UserName)
                 .RuleFor(player => player.EmailAddress, faker => faker.Person.Email));
 
-        private readonly Lazy<Faker<Map>> _lazyMapFaker = new Lazy<Faker<Map>>(() =>
+        private readonly Lazy<Faker<Map>> _lazyMapFaker = new(() =>
             new Faker<Map>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(map => map.Id, faker => faker.Random.Guid())

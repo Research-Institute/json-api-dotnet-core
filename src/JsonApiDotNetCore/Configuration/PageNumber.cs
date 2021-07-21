@@ -6,7 +6,7 @@ namespace JsonApiDotNetCore.Configuration
     [PublicAPI]
     public sealed class PageNumber : IEquatable<PageNumber>
     {
-        public static readonly PageNumber ValueOne = new PageNumber(1);
+        public static readonly PageNumber ValueOne = new(1);
 
         public int OneBasedValue { get; }
 

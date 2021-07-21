@@ -13,7 +13,7 @@ namespace JsonApiDotNetCore.Errors
     [PublicAPI]
     public class JsonApiException : Exception
     {
-        private static readonly JsonSerializerSettings ErrorSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings ErrorSerializerSettings = new()
         {
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented

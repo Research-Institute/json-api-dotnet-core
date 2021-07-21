@@ -466,7 +466,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Filtering
             {
                 Children = new List<FilterableResource>
                 {
-                    new FilterableResource()
+                    new()
                 }
             };
 
@@ -495,21 +495,21 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Filtering
             // Arrange
             var resources = new List<FilterableResource>
             {
-                new FilterableResource
+                new()
                 {
                     Children = new List<FilterableResource>
                     {
-                        new FilterableResource
+                        new()
                         {
                             SomeBoolean = false
                         }
                     }
                 },
-                new FilterableResource
+                new()
                 {
                     Children = new List<FilterableResource>
                     {
-                        new FilterableResource
+                        new()
                         {
                             SomeBoolean = true
                         }
@@ -544,8 +544,8 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Filtering
             {
                 Children = new List<FilterableResource>
                 {
-                    new FilterableResource(),
-                    new FilterableResource()
+                    new(),
+                    new()
                 }
             };
 

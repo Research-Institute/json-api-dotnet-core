@@ -16,7 +16,7 @@ namespace JsonApiDotNetCore.Repositories
     {
         private readonly IResourceFactory _resourceFactory;
         private readonly DbContext _dbContext;
-        private readonly List<object> _resources = new List<object>();
+        private readonly List<object> _resources = new();
 
         public PlaceholderResourceCollector(IResourceFactory resourceFactory, DbContext dbContext)
         {

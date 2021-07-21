@@ -45,7 +45,7 @@ namespace JsonApiDotNetCore.Resources.Annotations
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class HasManyThroughAttribute : HasManyAttribute
     {
-        private static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private static readonly CollectionConverter CollectionConverter = new();
 
         /// <summary>
         /// The name of the join property on the parent resource. In the example described above, this would be "ArticleTags".

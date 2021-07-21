@@ -23,7 +23,7 @@ namespace JsonApiDotNetCore.Serialization.Objects
         /// A link that leads to further details about this particular occurrence of the problem.
         /// </summary>
         [JsonProperty]
-        public ErrorLinks Links { get; set; } = new ErrorLinks();
+        public ErrorLinks Links { get; set; } = new();
 
         /// <summary>
         /// The HTTP status code applicable to this problem.
@@ -61,13 +61,13 @@ namespace JsonApiDotNetCore.Serialization.Objects
         /// An object containing references to the source of the error.
         /// </summary>
         [JsonProperty]
-        public ErrorSource Source { get; set; } = new ErrorSource();
+        public ErrorSource Source { get; set; } = new();
 
         /// <summary>
         /// An object containing non-standard meta-information (key/value pairs) about the error.
         /// </summary>
         [JsonProperty]
-        public ErrorMeta Meta { get; set; } = new ErrorMeta();
+        public ErrorMeta Meta { get; set; } = new();
 
         public Error(HttpStatusCode statusCode)
         {

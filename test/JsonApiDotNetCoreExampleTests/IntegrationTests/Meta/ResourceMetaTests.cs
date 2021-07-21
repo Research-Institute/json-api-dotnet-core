@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Meta
     public sealed class ResourceMetaTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<SupportDbContext>, SupportDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<SupportDbContext>, SupportDbContext> _testContext;
-        private readonly SupportFakers _fakers = new SupportFakers();
+        private readonly SupportFakers _fakers = new();
 
         public ResourceMetaTests(ExampleIntegrationTestContext<TestableStartup<SupportDbContext>, SupportDbContext> testContext)
         {

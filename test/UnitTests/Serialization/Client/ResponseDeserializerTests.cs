@@ -12,7 +12,7 @@ namespace UnitTests.Serialization.Client
 {
     public sealed class ResponseDeserializerTests : DeserializerTestsSetup
     {
-        private readonly Dictionary<string, string> _linkValues = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _linkValues = new();
         private readonly ResponseDeserializer _deserializer;
 
         public ResponseDeserializerTests()
@@ -135,7 +135,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "oneToOneDependents",
                     Id = "10",
@@ -144,7 +144,7 @@ namespace UnitTests.Serialization.Client
                         ["attributeMember"] = toOneAttributeValue
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyDependents",
                     Id = "10",
@@ -186,7 +186,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "oneToOnePrincipals",
                     Id = "10",
@@ -195,7 +195,7 @@ namespace UnitTests.Serialization.Client
                         ["attributeMember"] = toOneAttributeValue
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyPrincipals",
                     Id = "10",
@@ -233,7 +233,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyDependents",
                     Id = "10",
@@ -246,7 +246,7 @@ namespace UnitTests.Serialization.Client
                         ["principal"] = CreateRelationshipData("oneToManyPrincipals")
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyPrincipals",
                     Id = "10",
@@ -287,7 +287,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "multiPrincipals",
                     Id = "10",
@@ -300,7 +300,7 @@ namespace UnitTests.Serialization.Client
                         ["populatedToManies"] = CreateRelationshipData("oneToManyDependents", true)
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyDependents",
                     Id = "10",
@@ -313,7 +313,7 @@ namespace UnitTests.Serialization.Client
                         ["principal"] = CreateRelationshipData("oneToManyPrincipals")
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyPrincipals",
                     Id = "10",
@@ -362,7 +362,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "multiPrincipals",
                     Id = "10",
@@ -375,7 +375,7 @@ namespace UnitTests.Serialization.Client
                         ["populatedToManies"] = CreateRelationshipData("oneToManyDependents", true)
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyDependents",
                     Id = "10",
@@ -388,7 +388,7 @@ namespace UnitTests.Serialization.Client
                         ["principal"] = CreateRelationshipData("oneToManyPrincipals")
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "oneToManyPrincipals",
                     Id = "10",
@@ -429,7 +429,7 @@ namespace UnitTests.Serialization.Client
 
             content.Included = new List<ResourceObject>
             {
-                new ResourceObject
+                new()
                 {
                     Type = "firstDerivedModels",
                     Id = "10",
@@ -438,7 +438,7 @@ namespace UnitTests.Serialization.Client
                         ["firstProperty"] = "true"
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "secondDerivedModels",
                     Id = "11",
@@ -447,7 +447,7 @@ namespace UnitTests.Serialization.Client
                         ["secondProperty"] = "false"
                     }
                 },
-                new ResourceObject
+                new()
                 {
                     Type = "firstDerivedModels",
                     Id = "20",

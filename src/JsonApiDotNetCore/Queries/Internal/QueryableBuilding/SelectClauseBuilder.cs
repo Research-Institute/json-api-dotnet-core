@@ -21,7 +21,7 @@ namespace JsonApiDotNetCore.Queries.Internal.QueryableBuilding
     [PublicAPI]
     public class SelectClauseBuilder : QueryClauseBuilder<object>
     {
-        private static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private static readonly CollectionConverter CollectionConverter = new();
         private static readonly ConstantExpression NullConstant = Expression.Constant(null);
 
         private readonly Expression _source;

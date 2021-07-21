@@ -9,12 +9,12 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
 {
     internal sealed class ObfuscationFakers : FakerContainer
     {
-        private readonly Lazy<Faker<BankAccount>> _lazyBankAccountFaker = new Lazy<Faker<BankAccount>>(() =>
+        private readonly Lazy<Faker<BankAccount>> _lazyBankAccountFaker = new(() =>
             new Faker<BankAccount>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(bankAccount => bankAccount.Iban, faker => faker.Finance.Iban()));
 
-        private readonly Lazy<Faker<DebitCard>> _lazyDebitCardFaker = new Lazy<Faker<DebitCard>>(() =>
+        private readonly Lazy<Faker<DebitCard>> _lazyDebitCardFaker = new(() =>
             new Faker<DebitCard>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(debitCard => debitCard.OwnerName, faker => faker.Name.FullName())

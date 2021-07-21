@@ -11,7 +11,7 @@ namespace JsonApiDotNetCore.Resources
     [PublicAPI]
     public sealed class IdentifiableComparer : IEqualityComparer<IIdentifiable>
     {
-        public static readonly IdentifiableComparer Instance = new IdentifiableComparer();
+        public static readonly IdentifiableComparer Instance = new();
 
         private IdentifiableComparer()
         {

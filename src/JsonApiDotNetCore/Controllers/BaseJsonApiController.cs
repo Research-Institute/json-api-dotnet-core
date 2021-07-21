@@ -271,7 +271,7 @@ namespace JsonApiDotNetCore.Controllers
             }
 
             TResource updated = await _update.UpdateAsync(id, resource, cancellationToken);
-            return updated == null ? (IActionResult)NoContent() : Ok(updated);
+            return updated == null ? NoContent() : Ok(updated);
         }
 
         /// <summary>

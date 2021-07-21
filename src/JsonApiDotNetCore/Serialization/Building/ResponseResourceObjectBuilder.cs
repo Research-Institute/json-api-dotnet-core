@@ -14,7 +14,7 @@ namespace JsonApiDotNetCore.Serialization.Building
     [PublicAPI]
     public class ResponseResourceObjectBuilder : ResourceObjectBuilder
     {
-        private static readonly IncludeChainConverter IncludeChainConverter = new IncludeChainConverter();
+        private static readonly IncludeChainConverter IncludeChainConverter = new();
 
         private readonly ILinkBuilder _linkBuilder;
         private readonly IIncludedResourceObjectBuilder _includedBuilder;

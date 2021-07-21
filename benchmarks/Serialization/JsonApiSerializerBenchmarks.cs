@@ -15,13 +15,13 @@ namespace Benchmarks.Serialization
     [MarkdownExporter]
     public class JsonApiSerializerBenchmarks
     {
-        private static readonly BenchmarkResource Content = new BenchmarkResource
+        private static readonly BenchmarkResource Content = new()
         {
             Id = 123,
             Name = Guid.NewGuid().ToString()
         };
 
-        private readonly DependencyFactory _dependencyFactory = new DependencyFactory();
+        private readonly DependencyFactory _dependencyFactory = new();
         private readonly IJsonApiSerializer _jsonApiSerializer;
 
         public JsonApiSerializerBenchmarks()

@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
         : IClassFixture<ExampleIntegrationTestContext<RelativeLinksInApiNamespaceStartup<LinksDbContext>, LinksDbContext>>
     {
         private readonly ExampleIntegrationTestContext<RelativeLinksInApiNamespaceStartup<LinksDbContext>, LinksDbContext> _testContext;
-        private readonly LinksFakers _fakers = new LinksFakers();
+        private readonly LinksFakers _fakers = new();
 
         public RelativeLinksWithNamespaceTests(ExampleIntegrationTestContext<RelativeLinksInApiNamespaceStartup<LinksDbContext>, LinksDbContext> testContext)
         {

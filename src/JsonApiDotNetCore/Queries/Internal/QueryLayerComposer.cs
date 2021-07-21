@@ -13,7 +13,7 @@ namespace JsonApiDotNetCore.Queries.Internal
     [PublicAPI]
     public class QueryLayerComposer : IQueryLayerComposer
     {
-        private readonly CollectionConverter _collectionConverter = new CollectionConverter();
+        private readonly CollectionConverter _collectionConverter = new();
         private readonly IEnumerable<IQueryConstraintProvider> _constraintProviders;
         private readonly IResourceContextProvider _resourceContextProvider;
         private readonly IResourceDefinitionAccessor _resourceDefinitionAccessor;
@@ -409,7 +409,7 @@ namespace JsonApiDotNetCore.Queries.Internal
                 Filter = leftFilter,
                 Projection = new Dictionary<ResourceFieldAttribute, QueryLayer>
                 {
-                    [hasManyRelationship] = new QueryLayer(rightResourceContext)
+                    [hasManyRelationship] = new(rightResourceContext)
                     {
                         Filter = rightFilter,
                         Projection = new Dictionary<ResourceFieldAttribute, QueryLayer>

@@ -15,7 +15,7 @@ namespace JsonApiDotNetCore.Queries.Internal.QueryableBuilding
     [PublicAPI]
     public class IncludeClauseBuilder : QueryClauseBuilder<object>
     {
-        private static readonly IncludeChainConverter IncludeChainConverter = new IncludeChainConverter();
+        private static readonly IncludeChainConverter IncludeChainConverter = new();
 
         private readonly Expression _source;
         private readonly ResourceContext _resourceContext;

@@ -21,7 +21,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
     public sealed partial class OutboxTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OutboxDbContext>, OutboxDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OutboxDbContext>, OutboxDbContext> _testContext;
-        private readonly DomainFakers _fakers = new DomainFakers();
+        private readonly DomainFakers _fakers = new();
 
         public OutboxTests(ExampleIntegrationTestContext<TestableStartup<OutboxDbContext>, OutboxDbContext> testContext)
         {

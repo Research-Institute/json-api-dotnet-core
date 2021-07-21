@@ -18,8 +18,8 @@ namespace JsonApiDotNetCore.Configuration
     {
         private readonly IJsonApiOptions _options;
         private readonly ILogger<ResourceGraphBuilder> _logger;
-        private readonly List<ResourceContext> _resources = new List<ResourceContext>();
-        private readonly TypeLocator _typeLocator = new TypeLocator();
+        private readonly List<ResourceContext> _resources = new();
+        private readonly TypeLocator _typeLocator = new();
 
         public ResourceGraphBuilder(IJsonApiOptions options, ILoggerFactory loggerFactory)
         {
@@ -126,7 +126,7 @@ namespace JsonApiDotNetCore.Configuration
 
         private ResourceContext CreateResourceContext(string publicName, Type resourceType, Type idType)
         {
-            return new ResourceContext
+            return new()
             {
                 PublicName = publicName,
                 ResourceType = resourceType,

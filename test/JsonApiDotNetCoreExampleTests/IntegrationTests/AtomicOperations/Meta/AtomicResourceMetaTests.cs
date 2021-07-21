@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Meta
     public sealed class AtomicResourceMetaTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicResourceMetaTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {

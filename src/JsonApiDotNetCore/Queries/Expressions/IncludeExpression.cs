@@ -11,9 +11,9 @@ namespace JsonApiDotNetCore.Queries.Expressions
     [PublicAPI]
     public class IncludeExpression : QueryExpression
     {
-        private static readonly IncludeChainConverter IncludeChainConverter = new IncludeChainConverter();
+        private static readonly IncludeChainConverter IncludeChainConverter = new();
 
-        public static readonly IncludeExpression Empty = new IncludeExpression();
+        public static readonly IncludeExpression Empty = new();
 
         public IReadOnlyCollection<IncludeElementExpression> Elements { get; }
 

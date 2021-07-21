@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.HostingInIIS
         private const string HostPrefix = "http://localhost";
 
         private readonly ExampleIntegrationTestContext<HostingStartup<HostingDbContext>, HostingDbContext> _testContext;
-        private readonly HostingFakers _fakers = new HostingFakers();
+        private readonly HostingFakers _fakers = new();
 
         public HostingTests(ExampleIntegrationTestContext<HostingStartup<HostingDbContext>, HostingDbContext> testContext)
         {

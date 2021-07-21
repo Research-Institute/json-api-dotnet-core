@@ -20,7 +20,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
     public sealed class SerializationTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> _testContext;
-        private readonly SerializationFakers _fakers = new SerializationFakers();
+        private readonly SerializationFakers _fakers = new();
 
         public SerializationTests(ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> testContext)
         {

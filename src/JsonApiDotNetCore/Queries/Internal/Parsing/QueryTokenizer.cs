@@ -21,7 +21,7 @@ namespace JsonApiDotNetCore.Queries.Internal.Parsing
             });
 
         private readonly string _source;
-        private readonly StringBuilder _textBuffer = new StringBuilder();
+        private readonly StringBuilder _textBuffer = new();
         private int _offset;
         private bool _isInQuotedSection;
 
@@ -119,12 +119,12 @@ namespace JsonApiDotNetCore.Queries.Internal.Parsing
 
         private char? PeekChar()
         {
-            return _offset + 1 < _source.Length ? (char?)_source[_offset + 1] : null;
+            return _offset + 1 < _source.Length ? _source[_offset + 1] : null;
         }
 
         private static TokenKind? TryGetSingleCharacterTokenKind(char ch)
         {
-            return SingleCharacterToTokenKinds.ContainsKey(ch) ? (TokenKind?)SingleCharacterToTokenKinds[ch] : null;
+            return SingleCharacterToTokenKinds.ContainsKey(ch) ? SingleCharacterToTokenKinds[ch] : null;
         }
 
         private Token ProduceTokenFromTextBuffer(bool isQuotedText)

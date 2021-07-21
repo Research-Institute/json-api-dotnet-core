@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
     public sealed class ZeroAsKeyTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext> _testContext;
-        private readonly ZeroKeyFakers _fakers = new ZeroKeyFakers();
+        private readonly ZeroKeyFakers _fakers = new();
 
         public ZeroAsKeyTests(ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext> testContext)
         {

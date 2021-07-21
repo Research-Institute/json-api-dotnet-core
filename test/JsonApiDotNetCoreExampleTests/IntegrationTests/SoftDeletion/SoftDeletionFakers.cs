@@ -9,12 +9,12 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 {
     internal sealed class SoftDeletionFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Company>> _lazyCompanyFaker = new Lazy<Faker<Company>>(() =>
+        private readonly Lazy<Faker<Company>> _lazyCompanyFaker = new(() =>
             new Faker<Company>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(company => company.Name, faker => faker.Company.CompanyName()));
 
-        private readonly Lazy<Faker<Department>> _lazyDepartmentFaker = new Lazy<Faker<Department>>(() =>
+        private readonly Lazy<Faker<Department>> _lazyDepartmentFaker = new(() =>
             new Faker<Department>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(department => department.Name, faker => faker.Commerce.Department()));

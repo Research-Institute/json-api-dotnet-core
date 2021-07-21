@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Logging
     public sealed class LoggingTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext> _testContext;
-        private readonly AuditFakers _fakers = new AuditFakers();
+        private readonly AuditFakers _fakers = new();
 
         public LoggingTests(ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext> testContext)
         {

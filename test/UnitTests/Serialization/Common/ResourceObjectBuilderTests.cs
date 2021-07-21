@@ -131,7 +131,7 @@ namespace UnitTests.Serialization.Common
                 },
                 PopulatedToManies = new HashSet<OneToManyDependent>
                 {
-                    new OneToManyDependent
+                    new()
                     {
                         Id = 20
                     }

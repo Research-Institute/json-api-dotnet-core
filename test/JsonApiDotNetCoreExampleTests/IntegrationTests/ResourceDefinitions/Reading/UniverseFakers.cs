@@ -9,7 +9,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Rea
 {
     internal sealed class UniverseFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Star>> _lazyStarFaker = new Lazy<Faker<Star>>(() =>
+        private readonly Lazy<Faker<Star>> _lazyStarFaker = new(() =>
             new Faker<Star>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(star => star.Name, faker => faker.Random.Word())
@@ -18,14 +18,14 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Rea
                 .RuleFor(star => star.SolarMass, faker => faker.Random.Decimal(.001M, 100M))
                 .RuleFor(star => star.IsVisibleFromEarth, faker => faker.Random.Bool()));
 
-        private readonly Lazy<Faker<Planet>> _lazyPlanetFaker = new Lazy<Faker<Planet>>(() =>
+        private readonly Lazy<Faker<Planet>> _lazyPlanetFaker = new(() =>
             new Faker<Planet>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(planet => planet.PublicName, faker => faker.Random.Word())
                 .RuleFor(planet => planet.HasRingSystem, faker => faker.Random.Bool())
                 .RuleFor(planet => planet.SolarMass, faker => faker.Random.Decimal(.001M, 100M)));
 
-        private readonly Lazy<Faker<Moon>> _lazyMoonFaker = new Lazy<Faker<Moon>>(() =>
+        private readonly Lazy<Faker<Moon>> _lazyMoonFaker = new(() =>
             new Faker<Moon>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(moon => moon.Name, faker => faker.Random.Word())

@@ -11,7 +11,7 @@ namespace JsonApiDotNetCore.Queries.Internal.Parsing
     [PublicAPI]
     public class IncludeParser : QueryExpressionParser
     {
-        private static readonly IncludeChainConverter IncludeChainConverter = new IncludeChainConverter();
+        private static readonly IncludeChainConverter IncludeChainConverter = new();
 
         private readonly Action<RelationshipAttribute, ResourceContext, string> _validateSingleRelationshipCallback;
         private ResourceContext _resourceContextInScope;

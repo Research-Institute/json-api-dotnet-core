@@ -9,17 +9,17 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
 {
     internal sealed class LinksFakers : FakerContainer
     {
-        private readonly Lazy<Faker<PhotoAlbum>> _lazyPhotoAlbumFaker = new Lazy<Faker<PhotoAlbum>>(() =>
+        private readonly Lazy<Faker<PhotoAlbum>> _lazyPhotoAlbumFaker = new(() =>
             new Faker<PhotoAlbum>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(photoAlbum => photoAlbum.Name, faker => faker.Lorem.Sentence()));
 
-        private readonly Lazy<Faker<Photo>> _lazyPhotoFaker = new Lazy<Faker<Photo>>(() =>
+        private readonly Lazy<Faker<Photo>> _lazyPhotoFaker = new(() =>
             new Faker<Photo>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(photo => photo.Url, faker => faker.Image.PlaceImgUrl()));
 
-        private readonly Lazy<Faker<PhotoLocation>> _lazyPhotoLocationFaker = new Lazy<Faker<PhotoLocation>>(() =>
+        private readonly Lazy<Faker<PhotoLocation>> _lazyPhotoLocationFaker = new(() =>
             new Faker<PhotoLocation>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(photoLocation => photoLocation.PlaceName, faker => faker.Address.FullAddress())

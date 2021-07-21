@@ -9,12 +9,12 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 {
     internal sealed class MultiTenancyFakers : FakerContainer
     {
-        private readonly Lazy<Faker<WebShop>> _lazyWebShopFaker = new Lazy<Faker<WebShop>>(() =>
+        private readonly Lazy<Faker<WebShop>> _lazyWebShopFaker = new(() =>
             new Faker<WebShop>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(webShop => webShop.Url, faker => faker.Internet.Url()));
 
-        private readonly Lazy<Faker<WebProduct>> _lazyWebProductFaker = new Lazy<Faker<WebProduct>>(() =>
+        private readonly Lazy<Faker<WebProduct>> _lazyWebProductFaker = new(() =>
             new Faker<WebProduct>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(webProduct => webProduct.Name, faker => faker.Commerce.ProductName())

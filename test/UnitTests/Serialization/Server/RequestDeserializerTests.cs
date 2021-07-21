@@ -14,8 +14,8 @@ namespace UnitTests.Serialization.Server
     public sealed class RequestDeserializerTests : DeserializerTestsSetup
     {
         private readonly RequestDeserializer _deserializer;
-        private readonly Mock<ITargetedFields> _fieldsManagerMock = new Mock<ITargetedFields>();
-        private readonly Mock<IJsonApiRequest> _requestMock = new Mock<IJsonApiRequest>();
+        private readonly Mock<ITargetedFields> _fieldsManagerMock = new();
+        private readonly Mock<IJsonApiRequest> _requestMock = new();
 
         public RequestDeserializerTests()
         {
