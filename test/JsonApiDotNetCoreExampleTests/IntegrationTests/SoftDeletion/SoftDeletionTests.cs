@@ -557,7 +557,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingCompany, existingDepartment);
+                dbContext.AddInRange(existingCompany, existingDepartment);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -613,7 +613,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingDepartment, existingCompany);
+                dbContext.AddInRange(existingDepartment, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -699,7 +699,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingCompany, existingDepartment);
+                dbContext.AddInRange(existingCompany, existingDepartment);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -778,7 +778,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingDepartment, existingCompany);
+                dbContext.AddInRange(existingDepartment, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -818,7 +818,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingCompany, existingDepartment);
+                dbContext.AddInRange(existingCompany, existingDepartment);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -861,7 +861,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.SoftDeletion
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingCompany, existingDepartment);
+                dbContext.AddInRange(existingCompany, existingDepartment);
                 await dbContext.SaveChangesAsync();
             });
 

@@ -1511,7 +1511,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingLyric, existingCompany, existingPerformer);
+                dbContext.AddInRange(existingTrack, existingLyric, existingCompany, existingPerformer);
                 await dbContext.SaveChangesAsync();
             });
 

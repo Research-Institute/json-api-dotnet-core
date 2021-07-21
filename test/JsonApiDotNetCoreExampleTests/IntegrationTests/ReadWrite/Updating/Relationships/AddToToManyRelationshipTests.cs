@@ -33,7 +33,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingUserAccount);
+                dbContext.AddInRange(existingWorkItem, existingUserAccount);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -73,7 +73,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -456,7 +456,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -572,7 +572,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -615,7 +615,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 

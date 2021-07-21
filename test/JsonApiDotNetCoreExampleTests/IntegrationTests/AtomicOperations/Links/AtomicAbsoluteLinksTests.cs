@@ -44,7 +44,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Links
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingLanguage, existingCompany);
+                dbContext.AddInRange(existingLanguage, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 

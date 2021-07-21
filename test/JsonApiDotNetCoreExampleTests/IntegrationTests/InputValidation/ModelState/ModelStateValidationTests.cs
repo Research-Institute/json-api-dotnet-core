@@ -305,7 +305,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(directory, file);
+                dbContext.AddInRange(directory, file);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -917,7 +917,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(directory);
+                dbContext.AddInRange(directory);
                 await dbContext.SaveChangesAsync();
             });
 

@@ -1021,7 +1021,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingTag);
+                dbContext.AddInRange(existingWorkItem, existingTag);
                 dbContext.UserAccounts.AddRange(existingUserAccounts);
                 await dbContext.SaveChangesAsync();
             });

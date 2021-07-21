@@ -592,7 +592,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Ser
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingScholarship, existingStudent);
+                dbContext.AddInRange(existingScholarship, existingStudent);
                 await dbContext.SaveChangesAsync();
             });
 

@@ -57,7 +57,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<OutgoingMessage>();
-                dbContext.AddRange(existingGroup, existingUser);
+                dbContext.AddInRange(existingGroup, existingUser);
                 await dbContext.SaveChangesAsync();
             });
 

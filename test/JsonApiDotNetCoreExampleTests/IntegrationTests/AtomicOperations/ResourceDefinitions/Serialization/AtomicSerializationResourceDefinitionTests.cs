@@ -278,7 +278,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -337,7 +337,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 

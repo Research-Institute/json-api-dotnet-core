@@ -210,7 +210,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CompositeKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Car>();
-                dbContext.AddRange(existingCar, existingEngine);
+                dbContext.AddInRange(existingCar, existingEngine);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -387,7 +387,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CompositeKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Car>();
-                dbContext.AddRange(existingDealership, existingCar);
+                dbContext.AddInRange(existingDealership, existingCar);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -454,7 +454,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CompositeKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Car>();
-                dbContext.AddRange(existingDealership, existingCar);
+                dbContext.AddInRange(existingDealership, existingCar);
                 await dbContext.SaveChangesAsync();
             });
 

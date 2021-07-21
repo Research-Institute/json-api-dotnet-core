@@ -146,7 +146,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -297,7 +297,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingUserAccount);
+                dbContext.AddInRange(existingWorkItem, existingUserAccount);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -363,7 +363,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingTag);
+                dbContext.AddInRange(existingWorkItem, existingTag);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -734,7 +734,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 

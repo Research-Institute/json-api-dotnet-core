@@ -322,7 +322,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingPhoto, existingAlbum);
+                dbContext.AddInRange(existingPhoto, existingAlbum);
                 await dbContext.SaveChangesAsync();
             });
 

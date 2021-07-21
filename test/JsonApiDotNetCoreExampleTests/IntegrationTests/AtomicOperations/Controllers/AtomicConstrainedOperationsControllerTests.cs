@@ -168,7 +168,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Contro
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingPerformer);
+                dbContext.AddInRange(existingTrack, existingPerformer);
                 await dbContext.SaveChangesAsync();
             });
 

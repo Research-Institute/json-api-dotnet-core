@@ -237,7 +237,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Game>();
-                dbContext.AddRange(existingPlayer, existingGame);
+                dbContext.AddInRange(existingPlayer, existingGame);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -282,7 +282,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Game>();
-                dbContext.AddRange(existingPlayer, existingGame);
+                dbContext.AddInRange(existingPlayer, existingGame);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -365,7 +365,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Game>();
-                dbContext.AddRange(existingPlayer, existingGame);
+                dbContext.AddInRange(existingPlayer, existingGame);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -414,7 +414,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Game>();
-                dbContext.AddRange(existingPlayer, existingGame);
+                dbContext.AddInRange(existingPlayer, existingGame);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -463,7 +463,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Game>();
-                dbContext.AddRange(existingPlayer, existingGame);
+                dbContext.AddInRange(existingPlayer, existingGame);
                 await dbContext.SaveChangesAsync();
             });
 
