@@ -19,7 +19,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicSerializationResourceDefinitionTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -278,7 +278,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -337,7 +337,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Resour
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 

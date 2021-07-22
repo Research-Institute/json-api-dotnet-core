@@ -19,7 +19,7 @@ namespace DiscoveryTests
     {
         private static readonly NullLoggerFactory LoggerFactory = NullLoggerFactory.Instance;
         private readonly IServiceCollection _services = new ServiceCollection();
-        private readonly JsonApiOptions _options = new JsonApiOptions();
+        private readonly JsonApiOptions _options = new();
         private readonly ResourceGraphBuilder _resourceGraphBuilder;
 
         public ServiceDiscoveryFacadeTests()

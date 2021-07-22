@@ -41,7 +41,7 @@ namespace JsonApiDotNetCore.Configuration
 
             var httpContextAccessor = _serviceProvider.GetRequiredService<IHttpContextAccessor>();
 
-            if (httpContextAccessor.HttpContext.Request.Method == HttpMethods.Patch || request.OperationKind == OperationKind.UpdateResource)
+            if (httpContextAccessor.HttpContext!.Request.Method == HttpMethods.Patch || request.OperationKind == OperationKind.UpdateResource)
             {
                 var targetedFields = _serviceProvider.GetRequiredService<ITargetedFields>();
                 return IsFieldTargeted(entry, targetedFields);

@@ -9,17 +9,17 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.RequiredRelationships
 {
     internal sealed class DefaultBehaviorFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Order>> _orderFaker = new Lazy<Faker<Order>>(() =>
+        private readonly Lazy<Faker<Order>> _orderFaker = new(() =>
             new Faker<Order>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(order => order.Amount, faker => faker.Finance.Amount()));
 
-        private readonly Lazy<Faker<Customer>> _customerFaker = new Lazy<Faker<Customer>>(() =>
+        private readonly Lazy<Faker<Customer>> _customerFaker = new(() =>
             new Faker<Customer>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(customer => customer.EmailAddress, faker => faker.Person.Email));
 
-        private readonly Lazy<Faker<Shipment>> _shipmentFaker = new Lazy<Faker<Shipment>>(() =>
+        private readonly Lazy<Faker<Shipment>> _shipmentFaker = new(() =>
             new Faker<Shipment>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(shipment => shipment.TrackAndTraceCode, faker => faker.Commerce.Ean13())

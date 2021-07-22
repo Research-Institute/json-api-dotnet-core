@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
     public sealed class ETagTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> _testContext;
-        private readonly SerializationFakers _fakers = new SerializationFakers();
+        private readonly SerializationFakers _fakers = new();
 
         public ETagTests(ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> testContext)
         {
@@ -47,7 +47,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
 
             httpResponse.Headers.ETag.Should().NotBeNull();
-            httpResponse.Headers.ETag.IsWeak.Should().BeFalse();
+            httpResponse.Headers.ETag!.IsWeak.Should().BeFalse();
             httpResponse.Headers.ETag.Tag.Should().NotBeNullOrEmpty();
 
             responseDocument.Should().BeEmpty();
@@ -75,7 +75,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
 
             httpResponse.Headers.ETag.Should().NotBeNull();
-            httpResponse.Headers.ETag.IsWeak.Should().BeFalse();
+            httpResponse.Headers.ETag!.IsWeak.Should().BeFalse();
             httpResponse.Headers.ETag.Tag.Should().NotBeNullOrEmpty();
 
             responseDocument.Should().NotBeEmpty();
@@ -195,7 +195,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
 
             (HttpResponseMessage httpResponse1, _) = await _testContext.ExecuteGetAsync<string>(route);
 
-            string responseETag = httpResponse1.Headers.ETag.Tag;
+            string responseETag = httpResponse1.Headers.ETag!.Tag;
 
             Action<HttpRequestHeaders> setRequestHeaders2 = headers =>
             {
@@ -209,7 +209,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
             httpResponse2.Should().HaveStatusCode(HttpStatusCode.NotModified);
 
             httpResponse2.Headers.ETag.Should().NotBeNull();
-            httpResponse2.Headers.ETag.IsWeak.Should().BeFalse();
+            httpResponse2.Headers.ETag!.IsWeak.Should().BeFalse();
             httpResponse2.Headers.ETag.Tag.Should().NotBeNullOrEmpty();
 
             responseDocument2.Should().BeEmpty();
@@ -242,7 +242,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
 
             httpResponse.Headers.ETag.Should().NotBeNull();
-            httpResponse.Headers.ETag.IsWeak.Should().BeFalse();
+            httpResponse.Headers.ETag!.IsWeak.Should().BeFalse();
             httpResponse.Headers.ETag.Tag.Should().NotBeNullOrEmpty();
 
             responseDocument.Should().NotBeEmpty();

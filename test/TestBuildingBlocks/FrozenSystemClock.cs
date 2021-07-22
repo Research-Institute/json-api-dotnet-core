@@ -5,7 +5,7 @@ namespace TestBuildingBlocks
 {
     public sealed class FrozenSystemClock : ISystemClock
     {
-        private static readonly DateTimeOffset DefaultTime = new DateTimeOffset(new DateTime(2000, 1, 1, 1, 1, 1), TimeSpan.FromHours(1));
+        private static readonly DateTimeOffset DefaultTime = new(new DateTime(2000, 1, 1, 1, 1, 1), TimeSpan.FromHours(1));
 
         public DateTimeOffset UtcNow { get; set; } = DefaultTime;
     }

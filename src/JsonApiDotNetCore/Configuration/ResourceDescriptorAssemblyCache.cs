@@ -10,10 +10,8 @@ namespace JsonApiDotNetCore.Configuration
     /// </summary>
     internal sealed class ResourceDescriptorAssemblyCache
     {
-        private readonly TypeLocator _typeLocator = new TypeLocator();
-
-        private readonly Dictionary<Assembly, IReadOnlyCollection<ResourceDescriptor>> _resourceDescriptorsPerAssembly =
-            new Dictionary<Assembly, IReadOnlyCollection<ResourceDescriptor>>();
+        private readonly TypeLocator _typeLocator = new();
+        private readonly Dictionary<Assembly, IReadOnlyCollection<ResourceDescriptor>> _resourceDescriptorsPerAssembly = new();
 
         public void RegisterAssembly(Assembly assembly)
         {

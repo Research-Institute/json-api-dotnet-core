@@ -14,7 +14,7 @@ namespace JsonApiDotNetCore.Serialization.Building
     [PublicAPI]
     public class ResourceObjectBuilder : IResourceObjectBuilder
     {
-        private static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private static readonly CollectionConverter CollectionConverter = new();
 
         private readonly ResourceObjectBuilderSettings _settings;
         protected IResourceContextProvider ResourceContextProvider { get; }
@@ -88,7 +88,7 @@ namespace JsonApiDotNetCore.Serialization.Building
             ArgumentGuard.NotNull(resource, nameof(resource));
 
             return relationship is HasOneAttribute hasOne
-                ? (object)GetRelatedResourceLinkageForHasOne(hasOne, resource)
+                ? GetRelatedResourceLinkageForHasOne(hasOne, resource)
                 : GetRelatedResourceLinkageForHasMany((HasManyAttribute)relationship, resource);
         }
 

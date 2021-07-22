@@ -18,7 +18,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicReplaceToManyRelationshipTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -88,11 +88,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             existingPlaylist.PlaylistMusicTracks = new List<PlaylistMusicTrack>
             {
-                new PlaylistMusicTrack
+                new()
                 {
                     MusicTrack = _fakers.MusicTrack.Generate()
                 },
-                new PlaylistMusicTrack
+                new()
                 {
                     MusicTrack = _fakers.MusicTrack.Generate()
                 }
@@ -231,7 +231,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             existingPlaylist.PlaylistMusicTracks = new List<PlaylistMusicTrack>
             {
-                new PlaylistMusicTrack
+                new()
                 {
                     MusicTrack = _fakers.MusicTrack.Generate()
                 }

@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
     public sealed class ReplaceToManyRelationshipTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> _testContext;
-        private readonly ReadWriteFakers _fakers = new ReadWriteFakers();
+        private readonly ReadWriteFakers _fakers = new();
 
         public ReplaceToManyRelationshipTests(ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> testContext)
         {
@@ -146,7 +146,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -297,7 +297,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingUserAccount);
+                dbContext.AddInRange(existingWorkItem, existingUserAccount);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -363,7 +363,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingTag);
+                dbContext.AddInRange(existingWorkItem, existingTag);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -734,7 +734,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -935,7 +935,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
                 existingWorkItem.RelatedFromItems = new List<WorkItemToWorkItem>
                 {
-                    new WorkItemToWorkItem
+                    new()
                     {
                         FromItem = existingWorkItem
                     }

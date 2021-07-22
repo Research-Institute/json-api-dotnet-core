@@ -102,8 +102,8 @@ namespace JsonApiDotNetCore.Serialization.Building
         private string GetLinkForTopLevelSelf()
         {
             return _options.UseRelativeLinks
-                ? _httpContextAccessor.HttpContext.Request.GetEncodedPathAndQuery()
-                : _httpContextAccessor.HttpContext.Request.GetEncodedUrl();
+                ? _httpContextAccessor.HttpContext!.Request.GetEncodedPathAndQuery()
+                : _httpContextAccessor.HttpContext!.Request.GetEncodedUrl();
         }
 
         private void SetPaginationInTopLevelLinks(ResourceContext requestContext, TopLevelLinks links)
@@ -133,7 +133,7 @@ namespace JsonApiDotNetCore.Serialization.Building
 
         private string CalculatePageSizeValue(PageSize topPageSize, ResourceContext requestContext)
         {
-            string pageSizeParameterValue = _httpContextAccessor.HttpContext.Request.Query[PageSizeParameterName];
+            string pageSizeParameterValue = _httpContextAccessor.HttpContext!.Request.Query[PageSizeParameterName];
 
             PageSize newTopPageSize = Equals(topPageSize, _options.DefaultPageSize) ? null : topPageSize;
             return ChangeTopPageSize(pageSizeParameterValue, newTopPageSize, requestContext);
@@ -188,7 +188,7 @@ namespace JsonApiDotNetCore.Serialization.Building
         {
             string queryStringValue = GetQueryStringInPaginationLink(pageOffset, pageSizeValue);
 
-            var builder = new UriBuilder(_httpContextAccessor.HttpContext.Request.GetEncodedUrl())
+            var builder = new UriBuilder(_httpContextAccessor.HttpContext!.Request.GetEncodedUrl())
             {
                 Query = queryStringValue
             };
@@ -200,7 +200,7 @@ namespace JsonApiDotNetCore.Serialization.Building
         private string GetQueryStringInPaginationLink(int pageOffset, string pageSizeValue)
         {
             IDictionary<string, string> parameters =
-                _httpContextAccessor.HttpContext.Request.Query.ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
+                _httpContextAccessor.HttpContext!.Request.Query.ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
 
             if (pageSizeValue == null)
             {
@@ -311,7 +311,7 @@ namespace JsonApiDotNetCore.Serialization.Building
             // By default, we copy all route parameters from the *current* endpoint, which helps in case all endpoints have the same
             // set of non-standard parameters. There is no way we can know which non-standard parameters a *different* endpoint needs,
             // so users must override RenderLinkForAction to supply them, if applicable.
-            RouteValueDictionary routeValues = _httpContextAccessor.HttpContext.Request.RouteValues;
+            RouteValueDictionary routeValues = _httpContextAccessor.HttpContext!.Request.RouteValues;
 
             routeValues["id"] = primaryId;
             routeValues["relationshipName"] = relationshipName;

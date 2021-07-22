@@ -31,7 +31,7 @@ namespace TestBuildingBlocks
 
         public sealed class FakeLogger : ILogger
         {
-            private readonly ConcurrentBag<FakeLogMessage> _messages = new ConcurrentBag<FakeLogMessage>();
+            private readonly ConcurrentBag<FakeLogMessage> _messages = new();
 
             public IReadOnlyCollection<FakeLogMessage> Messages => _messages;
 

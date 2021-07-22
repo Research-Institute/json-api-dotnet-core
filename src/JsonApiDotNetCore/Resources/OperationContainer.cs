@@ -11,7 +11,7 @@ namespace JsonApiDotNetCore.Resources
     [PublicAPI]
     public sealed class OperationContainer
     {
-        private static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private static readonly CollectionConverter CollectionConverter = new();
 
         public OperationKind Kind { get; }
         public IIdentifiable Resource { get; }

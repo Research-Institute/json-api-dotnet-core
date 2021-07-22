@@ -19,7 +19,7 @@ namespace JsonApiDotNetCore.Errors
 
         private static Error CreateError(MissingResourceInRelationship missingResourceInRelationship)
         {
-            return new Error(HttpStatusCode.NotFound)
+            return new(HttpStatusCode.NotFound)
             {
                 Title = "A related resource does not exist.",
                 Detail = $"Related resource of type '{missingResourceInRelationship.ResourceType}' with ID '{missingResourceInRelationship.ResourceId}' " +

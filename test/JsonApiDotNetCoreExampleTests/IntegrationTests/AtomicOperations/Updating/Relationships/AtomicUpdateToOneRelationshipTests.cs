@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicUpdateToOneRelationshipTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -194,7 +194,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingLyric, existingTrack);
+                dbContext.AddInRange(existingLyric, existingTrack);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -247,7 +247,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingLyric);
+                dbContext.AddInRange(existingTrack, existingLyric);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -300,7 +300,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -356,7 +356,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<MusicTrack>();
-                dbContext.AddRange(existingLyric, existingTrack);
+                dbContext.AddInRange(existingLyric, existingTrack);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -415,7 +415,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Lyric>();
-                dbContext.AddRange(existingTrack, existingLyric);
+                dbContext.AddInRange(existingTrack, existingLyric);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -474,7 +474,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<RecordCompany>();
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 

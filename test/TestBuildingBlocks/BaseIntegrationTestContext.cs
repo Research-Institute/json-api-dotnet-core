@@ -31,7 +31,7 @@ namespace TestBuildingBlocks
         where TDbContext : DbContext
     {
         private readonly Lazy<WebApplicationFactory<TRemoteStartup>> _lazyFactory;
-        private readonly TestControllerProvider _testControllerProvider = new TestControllerProvider();
+        private readonly TestControllerProvider _testControllerProvider = new();
         private Action<ILoggingBuilder> _loggingConfiguration;
         private Action<IServiceCollection> _beforeServicesConfiguration;
         private Action<IServiceCollection> _afterServicesConfiguration;

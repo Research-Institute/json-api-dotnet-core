@@ -22,7 +22,7 @@ namespace JsonApiDotNetCore.Serialization
     [PublicAPI]
     public abstract class BaseDeserializer
     {
-        private protected static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private protected static readonly CollectionConverter CollectionConverter = new();
 
         protected IResourceContextProvider ResourceContextProvider { get; }
         protected IResourceFactory ResourceFactory { get; }

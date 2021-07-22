@@ -12,7 +12,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.RestrictedControllers
     public sealed class NoHttpPostTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<RestrictionDbContext>, RestrictionDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<RestrictionDbContext>, RestrictionDbContext> _testContext;
-        private readonly RestrictionFakers _fakers = new RestrictionFakers();
+        private readonly RestrictionFakers _fakers = new();
 
         public NoHttpPostTests(ExampleIntegrationTestContext<TestableStartup<RestrictionDbContext>, RestrictionDbContext> testContext)
         {

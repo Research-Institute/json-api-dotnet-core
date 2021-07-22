@@ -12,7 +12,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NamingConventions
     public sealed class KebabCasingTests : IClassFixture<ExampleIntegrationTestContext<KebabCasingConventionStartup<SwimmingDbContext>, SwimmingDbContext>>
     {
         private readonly ExampleIntegrationTestContext<KebabCasingConventionStartup<SwimmingDbContext>, SwimmingDbContext> _testContext;
-        private readonly SwimmingFakers _fakers = new SwimmingFakers();
+        private readonly SwimmingFakers _fakers = new();
 
         public KebabCasingTests(ExampleIntegrationTestContext<KebabCasingConventionStartup<SwimmingDbContext>, SwimmingDbContext> testContext)
         {

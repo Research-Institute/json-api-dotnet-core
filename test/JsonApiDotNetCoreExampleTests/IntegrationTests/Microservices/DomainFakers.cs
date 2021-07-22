@@ -9,13 +9,13 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices
 {
     internal sealed class DomainFakers : FakerContainer
     {
-        private readonly Lazy<Faker<DomainUser>> _lazyDomainUserFaker = new Lazy<Faker<DomainUser>>(() =>
+        private readonly Lazy<Faker<DomainUser>> _lazyDomainUserFaker = new(() =>
             new Faker<DomainUser>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(domainUser => domainUser.LoginName, faker => faker.Person.UserName)
                 .RuleFor(domainUser => domainUser.DisplayName, faker => faker.Person.FullName));
 
-        private readonly Lazy<Faker<DomainGroup>> _lazyDomainGroupFaker = new Lazy<Faker<DomainGroup>>(() =>
+        private readonly Lazy<Faker<DomainGroup>> _lazyDomainGroupFaker = new(() =>
             new Faker<DomainGroup>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(domainGroup => domainGroup.Name, faker => faker.Commerce.Department()));

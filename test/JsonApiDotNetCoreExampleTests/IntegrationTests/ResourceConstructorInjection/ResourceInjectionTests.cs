@@ -324,7 +324,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceConstructorInje
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingOffice, existingCertificate);
+                dbContext.AddInRange(existingOffice, existingCertificate);
                 await dbContext.SaveChangesAsync();
             });
 

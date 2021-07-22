@@ -144,10 +144,8 @@ namespace JsonApiDotNetCore.QueryStrings.Internal
 
         private sealed class PaginationContext
         {
-            private readonly MutablePaginationEntry _globalScope = new MutablePaginationEntry();
-
-            private readonly Dictionary<ResourceFieldChainExpression, MutablePaginationEntry> _nestedScopes =
-                new Dictionary<ResourceFieldChainExpression, MutablePaginationEntry>();
+            private readonly MutablePaginationEntry _globalScope = new();
+            private readonly Dictionary<ResourceFieldChainExpression, MutablePaginationEntry> _nestedScopes = new();
 
             public MutablePaginationEntry ResolveEntryInScope(ResourceFieldChainExpression scope)
             {

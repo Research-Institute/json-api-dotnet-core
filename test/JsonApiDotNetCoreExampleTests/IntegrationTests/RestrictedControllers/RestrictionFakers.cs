@@ -9,19 +9,19 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.RestrictedControllers
 {
     internal sealed class RestrictionFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Table>> _lazyTableFaker = new Lazy<Faker<Table>>(() =>
+        private readonly Lazy<Faker<Table>> _lazyTableFaker = new(() =>
             new Faker<Table>()
                 .UseSeed(GetFakerSeed()));
 
-        private readonly Lazy<Faker<Chair>> _lazyChairFaker = new Lazy<Faker<Chair>>(() =>
+        private readonly Lazy<Faker<Chair>> _lazyChairFaker = new(() =>
             new Faker<Chair>()
                 .UseSeed(GetFakerSeed()));
 
-        private readonly Lazy<Faker<Sofa>> _lazySofaFaker = new Lazy<Faker<Sofa>>(() =>
+        private readonly Lazy<Faker<Sofa>> _lazySofaFaker = new(() =>
             new Faker<Sofa>()
                 .UseSeed(GetFakerSeed()));
 
-        private readonly Lazy<Faker<Bed>> _lazyBedFaker = new Lazy<Faker<Bed>>(() =>
+        private readonly Lazy<Faker<Bed>> _lazyBedFaker = new(() =>
             new Faker<Bed>()
                 .UseSeed(GetFakerSeed()));
 

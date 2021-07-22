@@ -4,7 +4,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
 {
     public abstract class ObfuscatedIdentifiable : Identifiable
     {
-        private static readonly HexadecimalCodec Codec = new HexadecimalCodec();
+        private static readonly HexadecimalCodec Codec = new();
 
         protected override string GetStringId(int value)
         {

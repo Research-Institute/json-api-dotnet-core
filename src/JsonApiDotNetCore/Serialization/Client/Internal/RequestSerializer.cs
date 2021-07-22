@@ -18,7 +18,7 @@ namespace JsonApiDotNetCore.Serialization.Client.Internal
     public class RequestSerializer : BaseSerializer, IRequestSerializer
     {
         private readonly IResourceGraph _resourceGraph;
-        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings();
+        private readonly JsonSerializerSettings _jsonSerializerSettings = new();
         private Type _currentTargetedResource;
 
         /// <inheritdoc />

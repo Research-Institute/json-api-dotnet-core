@@ -302,7 +302,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<OutgoingMessage>();
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -379,7 +379,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<OutgoingMessage>();
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -587,7 +587,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<OutgoingMessage>();
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -642,7 +642,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.Transacti
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<OutgoingMessage>();
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 

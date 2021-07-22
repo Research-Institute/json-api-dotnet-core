@@ -65,7 +65,7 @@ namespace UnitTests.Serialization.Common
             {
                 Data = new List<ResourceObject>
                 {
-                    new ResourceObject
+                    new()
                     {
                         Type = "testResource",
                         Id = "1"
@@ -270,7 +270,7 @@ namespace UnitTests.Serialization.Common
             {
                 Data = new List<ResourceIdentifierObject>
                 {
-                    new ResourceIdentifierObject
+                    new()
                     {
                         Type = "Dependent",
                         Id = "1"

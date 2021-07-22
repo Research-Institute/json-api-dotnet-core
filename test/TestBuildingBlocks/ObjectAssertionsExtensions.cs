@@ -13,7 +13,7 @@ namespace TestBuildingBlocks
     {
         private const decimal NumericPrecision = 0.00000000001M;
 
-        private static readonly JsonSerializerSettings DeserializationSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings DeserializationSettings = new()
         {
             Formatting = Formatting.Indented
         };

@@ -17,7 +17,7 @@ namespace JsonApiDotNetCore.QueryStrings.Internal
         private const string InPrefix = "in:";
         private const string NotInPrefix = "nin:";
 
-        private static readonly Dictionary<string, string> PrefixConversionTable = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> PrefixConversionTable = new()
         {
             ["eq:"] = Keywords.Equals,
             ["lt:"] = Keywords.LessThan,

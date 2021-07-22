@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Links
         private const string HostPrefix = "http://localhost";
 
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicAbsoluteLinksTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -44,7 +44,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Links
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingLanguage, existingCompany);
+                dbContext.AddInRange(existingLanguage, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 

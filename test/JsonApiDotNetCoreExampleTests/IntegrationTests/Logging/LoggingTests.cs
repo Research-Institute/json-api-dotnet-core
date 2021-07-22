@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Logging
     public sealed class LoggingTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext> _testContext;
-        private readonly AuditFakers _fakers = new AuditFakers();
+        private readonly AuditFakers _fakers = new();
 
         public LoggingTests(ExampleIntegrationTestContext<TestableStartup<AuditDbContext>, AuditDbContext> testContext)
         {
@@ -31,7 +31,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Logging
                 options.ClearProviders();
                 options.AddProvider(loggerFactory);
                 options.SetMinimumLevel(LogLevel.Trace);
-                options.AddFilter((_, __) => true);
+                options.AddFilter((_, _) => true);
             });
 
             testContext.ConfigureServicesBeforeStartup(services =>

@@ -24,7 +24,7 @@ namespace JsonApiDotNetCore.Serialization.Building
         /// <inheritdoc />
         public ResourceObjectBuilderSettings Get()
         {
-            return new ResourceObjectBuilderSettings(_nullsReader.SerializerNullValueHandling, _defaultsReader.SerializerDefaultValueHandling);
+            return new(_nullsReader.SerializerNullValueHandling, _defaultsReader.SerializerDefaultValueHandling);
         }
     }
 }

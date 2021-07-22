@@ -20,7 +20,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Pagination
         private const int DefaultPageSize = 5;
 
         private readonly ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> _testContext;
-        private readonly QueryStringFakers _fakers = new QueryStringFakers();
+        private readonly QueryStringFakers _fakers = new();
 
         public PaginationWithTotalCountTests(ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> testContext)
         {
@@ -274,11 +274,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Pagination
 
             posts[0].BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }
@@ -286,11 +286,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Pagination
 
             posts[1].BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }
@@ -338,11 +338,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Pagination
 
             post.BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }

@@ -19,7 +19,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Pagination
         private const int DefaultPageSize = 5;
 
         private readonly ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> _testContext;
-        private readonly QueryStringFakers _fakers = new QueryStringFakers();
+        private readonly QueryStringFakers _fakers = new();
 
         public PaginationWithoutTotalCountTests(ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> testContext)
         {

@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CustomRoutes
         private const string HostPrefix = "http://localhost";
 
         private readonly ExampleIntegrationTestContext<TestableStartup<CustomRouteDbContext>, CustomRouteDbContext> _testContext;
-        private readonly CustomRouteFakers _fakers = new CustomRouteFakers();
+        private readonly CustomRouteFakers _fakers = new();
 
         public CustomRouteTests(ExampleIntegrationTestContext<TestableStartup<CustomRouteDbContext>, CustomRouteDbContext> testContext)
         {

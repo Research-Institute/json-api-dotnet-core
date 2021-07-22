@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Archiving
     public sealed class ArchiveTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<TelevisionDbContext>, TelevisionDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<TelevisionDbContext>, TelevisionDbContext> _testContext;
-        private readonly TelevisionFakers _fakers = new TelevisionFakers();
+        private readonly TelevisionFakers _fakers = new();
 
         public ArchiveTests(ExampleIntegrationTestContext<TestableStartup<TelevisionDbContext>, TelevisionDbContext> testContext)
         {

@@ -18,7 +18,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
     public sealed class EmptyGuidAsKeyTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext> _testContext;
-        private readonly ZeroKeyFakers _fakers = new ZeroKeyFakers();
+        private readonly ZeroKeyFakers _fakers = new();
 
         public EmptyGuidAsKeyTests(ExampleIntegrationTestContext<TestableStartup<ZeroKeyDbContext>, ZeroKeyDbContext> testContext)
         {
@@ -236,7 +236,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Map>();
-                dbContext.AddRange(existingGame, existingMap);
+                dbContext.AddInRange(existingGame, existingMap);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -281,7 +281,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Map>();
-                dbContext.AddRange(existingGame, existingMap);
+                dbContext.AddInRange(existingGame, existingMap);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -364,7 +364,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Map>();
-                dbContext.AddRange(existingGame, existingMap);
+                dbContext.AddInRange(existingGame, existingMap);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -413,7 +413,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Map>();
-                dbContext.AddRange(existingGame, existingMap);
+                dbContext.AddInRange(existingGame, existingMap);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -462,7 +462,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ZeroKeys
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<Map>();
-                dbContext.AddRange(existingGame, existingMap);
+                dbContext.AddInRange(existingGame, existingMap);
                 await dbContext.SaveChangesAsync();
             });
 

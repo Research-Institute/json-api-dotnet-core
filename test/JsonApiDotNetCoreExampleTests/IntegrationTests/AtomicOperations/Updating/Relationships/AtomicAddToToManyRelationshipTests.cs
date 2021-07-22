@@ -18,7 +18,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicAddToToManyRelationshipTests(ExampleIntegrationTestContext<TestableStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -36,7 +36,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -166,7 +166,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.Updati
 
             existingPlaylist.PlaylistMusicTracks = new List<PlaylistMusicTrack>
             {
-                new PlaylistMusicTrack
+                new()
                 {
                     MusicTrack = _fakers.MusicTrack.Generate()
                 }

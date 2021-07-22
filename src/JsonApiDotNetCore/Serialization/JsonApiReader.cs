@@ -81,6 +81,8 @@ namespace JsonApiDotNetCore.Serialization
                 ValidateRequestBody(model, body, context.HttpContext.Request);
             }
 
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // Justification: According to JSON:API we must return 200 OK without a body in some cases.
             return await InputFormatterResult.SuccessAsync(model);
         }
 

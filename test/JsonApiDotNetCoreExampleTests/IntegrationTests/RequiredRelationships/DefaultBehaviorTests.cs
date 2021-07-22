@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.RequiredRelationships
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<DefaultBehaviorDbContext>, DefaultBehaviorDbContext> _testContext;
 
-        private readonly DefaultBehaviorFakers _fakers = new DefaultBehaviorFakers();
+        private readonly DefaultBehaviorFakers _fakers = new();
 
         public DefaultBehaviorTests(ExampleIntegrationTestContext<TestableStartup<DefaultBehaviorDbContext>, DefaultBehaviorDbContext> testContext)
         {

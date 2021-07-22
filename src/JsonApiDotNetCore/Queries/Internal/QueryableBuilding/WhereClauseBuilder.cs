@@ -18,7 +18,7 @@ namespace JsonApiDotNetCore.Queries.Internal.QueryableBuilding
     [PublicAPI]
     public class WhereClauseBuilder : QueryClauseBuilder<Type>
     {
-        private static readonly CollectionConverter CollectionConverter = new CollectionConverter();
+        private static readonly CollectionConverter CollectionConverter = new();
         private static readonly ConstantExpression NullConstant = Expression.Constant(null);
 
         private readonly Expression _source;

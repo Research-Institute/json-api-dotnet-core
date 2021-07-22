@@ -24,7 +24,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Serialization
         public MeetingLocation Location
         {
             get =>
-                new MeetingLocation
+                new()
                 {
                     Latitude = Latitude,
                     Longitude = Longitude

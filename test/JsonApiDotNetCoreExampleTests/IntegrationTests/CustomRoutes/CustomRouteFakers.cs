@@ -9,14 +9,14 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.CustomRoutes
 {
     internal sealed class CustomRouteFakers : FakerContainer
     {
-        private readonly Lazy<Faker<Town>> _lazyTownFaker = new Lazy<Faker<Town>>(() =>
+        private readonly Lazy<Faker<Town>> _lazyTownFaker = new(() =>
             new Faker<Town>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(town => town.Name, faker => faker.Address.City())
                 .RuleFor(town => town.Latitude, faker => faker.Address.Latitude())
                 .RuleFor(town => town.Longitude, faker => faker.Address.Longitude()));
 
-        private readonly Lazy<Faker<Civilian>> _lazyCivilianFaker = new Lazy<Faker<Civilian>>(() =>
+        private readonly Lazy<Faker<Civilian>> _lazyCivilianFaker = new(() =>
             new Faker<Civilian>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(civilian => civilian.Name, faker => faker.Person.FullName));

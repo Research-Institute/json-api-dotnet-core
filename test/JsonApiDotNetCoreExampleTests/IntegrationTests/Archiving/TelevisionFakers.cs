@@ -9,24 +9,24 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Archiving
 {
     internal sealed class TelevisionFakers : FakerContainer
     {
-        private readonly Lazy<Faker<TelevisionNetwork>> _lazyTelevisionNetworkFaker = new Lazy<Faker<TelevisionNetwork>>(() =>
+        private readonly Lazy<Faker<TelevisionNetwork>> _lazyTelevisionNetworkFaker = new(() =>
             new Faker<TelevisionNetwork>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(network => network.Name, faker => faker.Company.CompanyName()));
 
-        private readonly Lazy<Faker<TelevisionStation>> _lazyTelevisionStationFaker = new Lazy<Faker<TelevisionStation>>(() =>
+        private readonly Lazy<Faker<TelevisionStation>> _lazyTelevisionStationFaker = new(() =>
             new Faker<TelevisionStation>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(station => station.Name, faker => faker.Company.CompanyName()));
 
-        private readonly Lazy<Faker<TelevisionBroadcast>> _lazyTelevisionBroadcastFaker = new Lazy<Faker<TelevisionBroadcast>>(() =>
+        private readonly Lazy<Faker<TelevisionBroadcast>> _lazyTelevisionBroadcastFaker = new(() =>
             new Faker<TelevisionBroadcast>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(broadcast => broadcast.Title, faker => faker.Lorem.Sentence())
                 .RuleFor(broadcast => broadcast.AiredAt, faker => faker.Date.PastOffset())
                 .RuleFor(broadcast => broadcast.ArchivedAt, faker => faker.Date.RecentOffset()));
 
-        private readonly Lazy<Faker<BroadcastComment>> _lazyBroadcastCommentFaker = new Lazy<Faker<BroadcastComment>>(() =>
+        private readonly Lazy<Faker<BroadcastComment>> _lazyBroadcastCommentFaker = new(() =>
             new Faker<BroadcastComment>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(comment => comment.Text, faker => faker.Lorem.Paragraph())

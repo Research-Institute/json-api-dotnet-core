@@ -21,7 +21,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
         private static readonly Guid OtherTenantId = RouteTenantProvider.TenantRegistry["ita"];
 
         private readonly ExampleIntegrationTestContext<TestableStartup<MultiTenancyDbContext>, MultiTenancyDbContext> _testContext;
-        private readonly MultiTenancyFakers _fakers = new MultiTenancyFakers();
+        private readonly MultiTenancyFakers _fakers = new();
 
         public MultiTenancyTests(ExampleIntegrationTestContext<TestableStartup<MultiTenancyDbContext>, MultiTenancyDbContext> testContext)
         {
@@ -546,7 +546,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingShop, existingProduct);
+                dbContext.AddInRange(existingShop, existingProduct);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -602,7 +602,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingProduct, existingShop);
+                dbContext.AddInRange(existingProduct, existingShop);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -690,7 +690,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingShop, existingProduct);
+                dbContext.AddInRange(existingShop, existingProduct);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -770,7 +770,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingProduct, existingShop);
+                dbContext.AddInRange(existingProduct, existingShop);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -812,7 +812,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingShop, existingProduct);
+                dbContext.AddInRange(existingShop, existingProduct);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -856,7 +856,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.MultiTenancy
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingShop, existingProduct);
+                dbContext.AddInRange(existingShop, existingProduct);
                 await dbContext.SaveChangesAsync();
             });
 

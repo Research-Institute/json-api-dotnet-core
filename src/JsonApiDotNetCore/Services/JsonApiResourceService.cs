@@ -23,7 +23,7 @@ namespace JsonApiDotNetCore.Services
     public class JsonApiResourceService<TResource, TId> : IResourceService<TResource, TId>
         where TResource : class, IIdentifiable<TId>
     {
-        private readonly CollectionConverter _collectionConverter = new CollectionConverter();
+        private readonly CollectionConverter _collectionConverter = new();
         private readonly IResourceRepositoryAccessor _repositoryAccessor;
         private readonly IQueryLayerComposer _queryLayerComposer;
         private readonly IPaginationContext _paginationContext;

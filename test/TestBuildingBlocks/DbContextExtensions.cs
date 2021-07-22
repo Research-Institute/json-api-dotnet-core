@@ -8,6 +8,11 @@ namespace TestBuildingBlocks
 {
     public static class DbContextExtensions
     {
+        public static void AddInRange(this DbContext dbContext, params object[] entities)
+        {
+            dbContext.AddRange(entities);
+        }
+
         public static async Task ClearTableAsync<TEntity>(this DbContext dbContext)
             where TEntity : class
         {

@@ -100,9 +100,9 @@ namespace JsonApiDotNetCore.Queries.Expressions
 
         private sealed class IncludeToChainsConverter : QueryExpressionVisitor<object, object>
         {
-            private readonly Stack<RelationshipAttribute> _parentRelationshipStack = new Stack<RelationshipAttribute>();
+            private readonly Stack<RelationshipAttribute> _parentRelationshipStack = new();
 
-            public List<ResourceFieldChainExpression> Chains { get; } = new List<ResourceFieldChainExpression>();
+            public List<ResourceFieldChainExpression> Chains { get; } = new();
 
             public override object VisitInclude(IncludeExpression expression, object argument)
             {

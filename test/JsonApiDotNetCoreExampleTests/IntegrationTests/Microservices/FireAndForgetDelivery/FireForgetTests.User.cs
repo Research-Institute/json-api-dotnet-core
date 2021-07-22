@@ -283,7 +283,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.FireAndFo
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -357,7 +357,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.FireAndFo
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -553,7 +553,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.FireAndFo
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -605,7 +605,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Microservices.FireAndFo
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingUser, existingGroup);
+                dbContext.AddInRange(existingUser, existingGroup);
                 await dbContext.SaveChangesAsync();
             });
 

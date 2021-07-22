@@ -18,16 +18,13 @@ namespace JsonApiDotNetCore.QueryStrings.Internal
     [PublicAPI]
     public class FilterQueryStringParameterReader : QueryStringParameterReader, IFilterQueryStringParameterReader
     {
-        private static readonly LegacyFilterNotationConverter LegacyConverter = new LegacyFilterNotationConverter();
+        private static readonly LegacyFilterNotationConverter LegacyConverter = new();
 
         private readonly IJsonApiOptions _options;
         private readonly QueryStringParameterScopeParser _scopeParser;
         private readonly FilterParser _filterParser;
-
-        private readonly List<FilterExpression> _filtersInGlobalScope = new List<FilterExpression>();
-
-        private readonly Dictionary<ResourceFieldChainExpression, List<FilterExpression>> _filtersPerScope =
-            new Dictionary<ResourceFieldChainExpression, List<FilterExpression>>();
+        private readonly List<FilterExpression> _filtersInGlobalScope = new();
+        private readonly Dictionary<ResourceFieldChainExpression, List<FilterExpression>> _filtersPerScope = new();
 
         private string _lastParameterName;
 

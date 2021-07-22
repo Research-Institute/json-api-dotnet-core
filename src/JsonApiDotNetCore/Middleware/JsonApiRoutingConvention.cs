@@ -33,9 +33,9 @@ namespace JsonApiDotNetCore.Middleware
     {
         private readonly IJsonApiOptions _options;
         private readonly IResourceContextProvider _resourceContextProvider;
-        private readonly Dictionary<string, string> _registeredControllerNameByTemplate = new Dictionary<string, string>();
-        private readonly Dictionary<Type, ResourceContext> _resourceContextPerControllerTypeMap = new Dictionary<Type, ResourceContext>();
-        private readonly Dictionary<ResourceContext, ControllerModel> _controllerPerResourceContextMap = new Dictionary<ResourceContext, ControllerModel>();
+        private readonly Dictionary<string, string> _registeredControllerNameByTemplate = new();
+        private readonly Dictionary<Type, ResourceContext> _resourceContextPerControllerTypeMap = new();
+        private readonly Dictionary<ResourceContext, ControllerModel> _controllerPerResourceContextMap = new();
 
         public JsonApiRoutingConvention(IJsonApiOptions options, IResourceContextProvider resourceContextProvider)
         {

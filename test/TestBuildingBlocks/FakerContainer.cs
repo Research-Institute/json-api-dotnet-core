@@ -22,7 +22,7 @@ namespace TestBuildingBlocks
         {
             var stackTrace = new StackTrace();
 
-            MethodBase testMethod = stackTrace.GetFrames().Select(stackFrame => stackFrame?.GetMethod()).FirstOrDefault(IsTestMethod);
+            MethodBase testMethod = stackTrace.GetFrames().Select(stackFrame => stackFrame.GetMethod()).FirstOrDefault(IsTestMethod);
 
             if (testMethod == null)
             {

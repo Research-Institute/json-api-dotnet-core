@@ -16,7 +16,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> _testContext;
-        private readonly ReadWriteFakers _fakers = new ReadWriteFakers();
+        private readonly ReadWriteFakers _fakers = new();
 
         public RemoveFromToManyRelationshipTests(ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> testContext)
         {
@@ -74,7 +74,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<UserAccount>();
-                dbContext.AddRange(existingWorkItem, existingSubscriber);
+                dbContext.AddInRange(existingWorkItem, existingSubscriber);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -140,7 +140,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
                 await dbContext.ClearTableAsync<WorkTag>();
-                dbContext.AddRange(existingWorkItem, existingTag);
+                dbContext.AddInRange(existingWorkItem, existingTag);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -807,7 +807,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Rela
 
             existingWorkItem.RelatedFromItems = new List<WorkItemToWorkItem>
             {
-                new WorkItemToWorkItem
+                new()
                 {
                     FromItem = _fakers.WorkItem.Generate()
                 }

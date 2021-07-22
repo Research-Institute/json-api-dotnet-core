@@ -156,7 +156,7 @@ namespace UnitTests.Serialization.Client
                 },
                 PopulatedToManies = new HashSet<OneToManyDependent>
                 {
-                    new OneToManyDependent
+                    new()
                     {
                         Id = 20
                     }
@@ -216,13 +216,13 @@ namespace UnitTests.Serialization.Client
             // Arrange
             var resources = new List<TestResource>
             {
-                new TestResource
+                new()
                 {
                     Id = 1,
                     StringField = "value1",
                     NullableIntField = 123
                 },
-                new TestResource
+                new()
                 {
                     Id = 2,
                     StringField = "value2",

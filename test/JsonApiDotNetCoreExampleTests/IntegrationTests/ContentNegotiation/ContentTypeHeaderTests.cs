@@ -34,7 +34,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ContentNegotiation
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be(HeaderConstants.MediaType);
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be(HeaderConstants.MediaType);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ContentNegotiation
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be(HeaderConstants.AtomicOperationsMediaType);
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be(HeaderConstants.AtomicOperationsMediaType);
         }
 
         [Fact]

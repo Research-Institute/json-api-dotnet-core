@@ -12,7 +12,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
     public sealed class LinkInclusionTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<LinksDbContext>, LinksDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<LinksDbContext>, LinksDbContext> _testContext;
-        private readonly LinksFakers _fakers = new LinksFakers();
+        private readonly LinksFakers _fakers = new();
 
         public LinkInclusionTests(ExampleIntegrationTestContext<TestableStartup<LinksDbContext>, LinksDbContext> testContext)
         {

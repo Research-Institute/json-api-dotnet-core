@@ -24,7 +24,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.QueryS
 
         public override QueryStringParameterHandlers<MusicTrack> OnRegisterQueryableHandlersForQueryStringParameters()
         {
-            return new QueryStringParameterHandlers<MusicTrack>
+            return new()
             {
                 ["isRecentlyReleased"] = FilterOnRecentlyReleased
             };

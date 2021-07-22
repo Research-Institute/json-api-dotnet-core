@@ -32,7 +32,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("application/json; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("[\"Welcome!\"]");
@@ -60,7 +60,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("text/plain; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("text/plain; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("Hello, Jack");
@@ -79,7 +79,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.BadRequest);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("text/plain; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("text/plain; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("Please send your name.");
@@ -107,7 +107,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("text/plain; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("text/plain; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("Hi, Jane");
@@ -126,7 +126,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("text/plain; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("text/plain; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("Good day, Janice");
@@ -145,7 +145,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.NonJsonApiControllers
 
             // Assert
             httpResponse.Should().HaveStatusCode(HttpStatusCode.OK);
-            httpResponse.Content.Headers.ContentType.ToString().Should().Be("text/plain; charset=utf-8");
+            httpResponse.Content.Headers.ContentType.Should().NotBeNull().And.Subject.ToString().Should().Be("text/plain; charset=utf-8");
 
             string responseText = await httpResponse.Content.ReadAsStringAsync();
             responseText.Should().Be("Bye.");

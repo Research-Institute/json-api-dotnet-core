@@ -17,7 +17,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Ser
         : IClassFixture<ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> _testContext;
-        private readonly SerializationFakers _fakers = new SerializationFakers();
+        private readonly SerializationFakers _fakers = new();
 
         public ResourceDefinitionSerializationTests(ExampleIntegrationTestContext<TestableStartup<SerializationDbContext>, SerializationDbContext> testContext)
         {
@@ -592,7 +592,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ResourceDefinitions.Ser
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingScholarship, existingStudent);
+                dbContext.AddInRange(existingScholarship, existingStudent);
                 await dbContext.SaveChangesAsync();
             });
 

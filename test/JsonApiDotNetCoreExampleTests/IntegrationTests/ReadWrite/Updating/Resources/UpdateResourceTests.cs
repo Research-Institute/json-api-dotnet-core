@@ -18,7 +18,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
     public sealed class UpdateResourceTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> _testContext;
-        private readonly ReadWriteFakers _fakers = new ReadWriteFakers();
+        private readonly ReadWriteFakers _fakers = new();
 
         public UpdateResourceTests(ExampleIntegrationTestContext<TestableStartup<ReadWriteDbContext>, ReadWriteDbContext> testContext)
         {
@@ -1008,7 +1008,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             existingWorkItem.WorkItemTags = new List<WorkItemTag>
             {
-                new WorkItemTag
+                new()
                 {
                     Tag = _fakers.WorkTag.Generate()
                 }
@@ -1021,7 +1021,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingWorkItem, existingTag);
+                dbContext.AddInRange(existingWorkItem, existingTag);
                 dbContext.UserAccounts.AddRange(existingUserAccounts);
                 await dbContext.SaveChangesAsync();
             });
@@ -1122,7 +1122,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.ReadWrite.Updating.Reso
 
             existingWorkItem.RelatedToItems = new List<WorkItemToWorkItem>
             {
-                new WorkItemToWorkItem
+                new()
                 {
                     ToItem = _fakers.WorkItem.Generate()
                 }

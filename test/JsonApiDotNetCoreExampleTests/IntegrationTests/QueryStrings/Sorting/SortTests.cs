@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Sorting
     public sealed class SortTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> _testContext;
-        private readonly QueryStringFakers _fakers = new QueryStringFakers();
+        private readonly QueryStringFakers _fakers = new();
 
         public SortTests(ExampleIntegrationTestContext<TestableStartup<QueryStringDbContext>, QueryStringDbContext> testContext)
         {
@@ -180,7 +180,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Sorting
 
             posts[0].BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }
@@ -188,11 +188,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Sorting
 
             posts[1].BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }
@@ -293,15 +293,15 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.Sorting
 
             post.BlogPostLabels = new HashSet<BlogPostLabel>
             {
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 },
-                new BlogPostLabel
+                new()
                 {
                     Label = _fakers.Label.Generate()
                 }

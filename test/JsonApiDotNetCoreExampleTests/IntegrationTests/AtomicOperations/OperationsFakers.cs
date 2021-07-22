@@ -13,18 +13,18 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations
     internal sealed class OperationsFakers : FakerContainer
     {
         private static readonly Lazy<IReadOnlyList<string>> LazyLanguageIsoCodes =
-            new Lazy<IReadOnlyList<string>>(() => CultureInfo
+            new(() => CultureInfo
                 .GetCultures(CultureTypes.NeutralCultures)
                 .Where(culture => !string.IsNullOrEmpty(culture.Name))
                 .Select(culture => culture.Name)
                 .ToArray());
 
-        private readonly Lazy<Faker<Playlist>> _lazyPlaylistFaker = new Lazy<Faker<Playlist>>(() =>
+        private readonly Lazy<Faker<Playlist>> _lazyPlaylistFaker = new(() =>
             new Faker<Playlist>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(playlist => playlist.Name, faker => faker.Lorem.Sentence()));
 
-        private readonly Lazy<Faker<MusicTrack>> _lazyMusicTrackFaker = new Lazy<Faker<MusicTrack>>(() =>
+        private readonly Lazy<Faker<MusicTrack>> _lazyMusicTrackFaker = new(() =>
             new Faker<MusicTrack>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(musicTrack => musicTrack.Title, faker => faker.Lorem.Word())
@@ -32,24 +32,24 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations
                 .RuleFor(musicTrack => musicTrack.Genre, faker => faker.Lorem.Word())
                 .RuleFor(musicTrack => musicTrack.ReleasedAt, faker => faker.Date.PastOffset()));
 
-        private readonly Lazy<Faker<Lyric>> _lazyLyricFaker = new Lazy<Faker<Lyric>>(() =>
+        private readonly Lazy<Faker<Lyric>> _lazyLyricFaker = new(() =>
             new Faker<Lyric>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(lyric => lyric.Text, faker => faker.Lorem.Text())
                 .RuleFor(lyric => lyric.Format, "LRC"));
 
-        private readonly Lazy<Faker<TextLanguage>> _lazyTextLanguageFaker = new Lazy<Faker<TextLanguage>>(() =>
+        private readonly Lazy<Faker<TextLanguage>> _lazyTextLanguageFaker = new(() =>
             new Faker<TextLanguage>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(textLanguage => textLanguage.IsoCode, faker => faker.PickRandom<string>(LazyLanguageIsoCodes.Value)));
 
-        private readonly Lazy<Faker<Performer>> _lazyPerformerFaker = new Lazy<Faker<Performer>>(() =>
+        private readonly Lazy<Faker<Performer>> _lazyPerformerFaker = new(() =>
             new Faker<Performer>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(performer => performer.ArtistName, faker => faker.Name.FullName())
                 .RuleFor(performer => performer.BornAt, faker => faker.Date.PastOffset()));
 
-        private readonly Lazy<Faker<RecordCompany>> _lazyRecordCompanyFaker = new Lazy<Faker<RecordCompany>>(() =>
+        private readonly Lazy<Faker<RecordCompany>> _lazyRecordCompanyFaker = new(() =>
             new Faker<RecordCompany>()
                 .UseSeed(GetFakerSeed())
                 .RuleFor(recordCompany => recordCompany.Name, faker => faker.Company.CompanyName())

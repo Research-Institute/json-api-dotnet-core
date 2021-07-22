@@ -19,7 +19,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
         private const string HostPrefix = "http://localhost";
 
         private readonly ExampleIntegrationTestContext<AbsoluteLinksNoNamespaceStartup<LinksDbContext>, LinksDbContext> _testContext;
-        private readonly LinksFakers _fakers = new LinksFakers();
+        private readonly LinksFakers _fakers = new();
 
         public AbsoluteLinksWithoutNamespaceTests(ExampleIntegrationTestContext<AbsoluteLinksNoNamespaceStartup<LinksDbContext>, LinksDbContext> testContext)
         {
@@ -324,7 +324,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.Links
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingPhoto, existingAlbum);
+                dbContext.AddInRange(existingPhoto, existingAlbum);
                 await dbContext.SaveChangesAsync();
             });
 

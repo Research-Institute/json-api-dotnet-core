@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
     public sealed class IdObfuscationTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext> _testContext;
-        private readonly ObfuscationFakers _fakers = new ObfuscationFakers();
+        private readonly ObfuscationFakers _fakers = new();
 
         public IdObfuscationTests(ExampleIntegrationTestContext<TestableStartup<ObfuscationDbContext>, ObfuscationDbContext> testContext)
         {
@@ -277,7 +277,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingAccount, existingCard);
+                dbContext.AddInRange(existingAccount, existingCard);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -341,7 +341,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.IdObfuscation
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingAccount, existingDebitCard);
+                dbContext.AddInRange(existingAccount, existingDebitCard);
                 await dbContext.SaveChangesAsync();
             });
 

@@ -125,6 +125,8 @@ namespace JsonApiDotNetCore.Middleware
         {
             string contentType = httpContext.Request.ContentType;
 
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            // Justification: Workaround for https://github.com/dotnet/aspnetcore/issues/32097 (fixed in .NET 6)
             if (contentType != null && contentType != allowedContentType)
             {
                 await FlushResponseAsync(httpContext.Response, serializerSettings, new Error(HttpStatusCode.UnsupportedMediaType)
@@ -280,9 +282,9 @@ namespace JsonApiDotNetCore.Middleware
             if (resourceName != null)
             {
                 Endpoint endpoint = httpContext.GetEndpoint();
-                var routeAttribute = endpoint.Metadata.GetMetadata<RouteAttribute>();
+                var routeAttribute = endpoint?.Metadata.GetMetadata<RouteAttribute>();
 
-                if (routeAttribute != null)
+                if (routeAttribute != null && httpContext.Request.Path.Value != null)
                 {
                     List<string> trimmedComponents = httpContext.Request.Path.Value.Trim('/').Split('/').ToList();
                     int resourceNameIndex = trimmedComponents.FindIndex(component => component == resourceName);

@@ -15,7 +15,7 @@ namespace UnitTests.Models
 
             var relationships = new List<ResourceIdentifierObject>
             {
-                new ResourceIdentifierObject
+                new()
                 {
                     Id = "9",
                     Type = "authors"

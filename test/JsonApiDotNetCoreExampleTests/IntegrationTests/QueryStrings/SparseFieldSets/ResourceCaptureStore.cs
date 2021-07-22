@@ -5,7 +5,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.QueryStrings.SparseFiel
 {
     public sealed class ResourceCaptureStore
     {
-        internal List<IIdentifiable> Resources { get; } = new List<IIdentifiable>();
+        internal List<IIdentifiable> Resources { get; } = new();
 
         internal void Add(IEnumerable<IIdentifiable> resources)
         {

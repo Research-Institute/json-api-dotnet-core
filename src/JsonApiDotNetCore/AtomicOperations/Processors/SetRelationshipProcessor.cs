@@ -14,7 +14,7 @@ namespace JsonApiDotNetCore.AtomicOperations.Processors
     public class SetRelationshipProcessor<TResource, TId> : ISetRelationshipProcessor<TResource, TId>
         where TResource : class, IIdentifiable<TId>
     {
-        private readonly CollectionConverter _collectionConverter = new CollectionConverter();
+        private readonly CollectionConverter _collectionConverter = new();
         private readonly ISetRelationshipService<TResource, TId> _service;
 
         public SetRelationshipProcessor(ISetRelationshipService<TResource, TId> service)

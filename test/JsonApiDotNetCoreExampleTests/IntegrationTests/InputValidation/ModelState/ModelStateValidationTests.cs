@@ -305,7 +305,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(directory, file);
+                dbContext.AddInRange(directory, file);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -580,7 +580,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
                 IsCaseSensitive = false,
                 Subdirectories = new List<SystemDirectory>
                 {
-                    new SystemDirectory
+                    new()
                     {
                         Name = "C#",
                         IsCaseSensitive = false
@@ -588,7 +588,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
                 },
                 Files = new List<SystemFile>
                 {
-                    new SystemFile
+                    new()
                     {
                         FileName = "readme.txt"
                     }
@@ -851,11 +851,11 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
                 IsCaseSensitive = true,
                 Files = new List<SystemFile>
                 {
-                    new SystemFile
+                    new()
                     {
                         FileName = "Main.cs"
                     },
-                    new SystemFile
+                    new()
                     {
                         FileName = "Program.cs"
                     }
@@ -907,7 +907,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
                 IsCaseSensitive = true,
                 Files = new List<SystemFile>
                 {
-                    new SystemFile
+                    new()
                     {
                         FileName = "Main.cs",
                         SizeInBytes = 100
@@ -917,7 +917,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.InputValidation.ModelSt
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(directory);
+                dbContext.AddInRange(directory);
                 await dbContext.SaveChangesAsync();
             });
 

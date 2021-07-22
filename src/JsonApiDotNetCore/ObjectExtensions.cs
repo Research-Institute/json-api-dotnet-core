@@ -21,7 +21,7 @@ namespace JsonApiDotNetCore
 
         public static List<T> AsList<T>(this T element)
         {
-            return new List<T>
+            return new()
             {
                 element
             };

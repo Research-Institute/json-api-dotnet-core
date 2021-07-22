@@ -90,8 +90,8 @@ See also our [versioning policy](./VERSIONING_POLICY.md).
 | .NET Version      | EF Core Version | JsonApiDotNetCore Version |
 | ----------------- | --------------- | ------------------------- |
 | .NET Core 2.x     | 2.x             | v3.x                      |
-| .NET Core 3.1     | 3.1, 5          | v4                        |
-| .NET 5            | 5               | v4                        |
+| .NET Core 3.1     | 3.1, 5          | v4.x                      |
+| .NET 5            | 5               | v4.x, v5.x                |
 
 
 ## Contributing

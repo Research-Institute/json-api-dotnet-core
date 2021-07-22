@@ -14,7 +14,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.EagerLoading
     public sealed class EagerLoadingTests : IClassFixture<ExampleIntegrationTestContext<TestableStartup<EagerLoadingDbContext>, EagerLoadingDbContext>>
     {
         private readonly ExampleIntegrationTestContext<TestableStartup<EagerLoadingDbContext>, EagerLoadingDbContext> _testContext;
-        private readonly EagerLoadingFakers _fakers = new EagerLoadingFakers();
+        private readonly EagerLoadingFakers _fakers = new();
 
         public EagerLoadingTests(ExampleIntegrationTestContext<TestableStartup<EagerLoadingDbContext>, EagerLoadingDbContext> testContext)
         {

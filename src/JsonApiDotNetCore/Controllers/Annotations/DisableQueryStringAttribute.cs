@@ -21,7 +21,7 @@ namespace JsonApiDotNetCore.Controllers.Annotations
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
     public sealed class DisableQueryStringAttribute : Attribute
     {
-        public static readonly DisableQueryStringAttribute Empty = new DisableQueryStringAttribute(StandardQueryStringParameters.None);
+        public static readonly DisableQueryStringAttribute Empty = new(StandardQueryStringParameters.None);
         public IReadOnlyCollection<string> ParameterNames { get; }
 
         /// <summary>

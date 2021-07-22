@@ -15,7 +15,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.ModelS
         : IClassFixture<ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext>>
     {
         private readonly ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext> _testContext;
-        private readonly OperationsFakers _fakers = new OperationsFakers();
+        private readonly OperationsFakers _fakers = new();
 
         public AtomicModelStateValidationTests(ExampleIntegrationTestContext<ModelStateValidationStartup<OperationsDbContext>, OperationsDbContext> testContext)
         {
@@ -264,7 +264,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.ModelS
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingPlaylist, existingTrack);
+                dbContext.AddInRange(existingPlaylist, existingTrack);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -335,7 +335,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.ModelS
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingTrack, existingCompany);
+                dbContext.AddInRange(existingTrack, existingCompany);
                 await dbContext.SaveChangesAsync();
             });
 
@@ -389,7 +389,7 @@ namespace JsonApiDotNetCoreExampleTests.IntegrationTests.AtomicOperations.ModelS
 
             await _testContext.RunOnDatabaseAsync(async dbContext =>
             {
-                dbContext.AddRange(existingPlaylist, existingTrack);
+                dbContext.AddInRange(existingPlaylist, existingTrack);
                 await dbContext.SaveChangesAsync();
             });
 
